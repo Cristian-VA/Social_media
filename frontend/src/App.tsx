@@ -4,6 +4,7 @@ import SignInForm from "./_Auth/Forms/SignInForm"
 import SignUpForm from "./_Auth/Forms/SignUpForm"
 import { Home } from "./_Root/Pages"
 import AuthLayOut from "./_Auth/AuthLayOut"
+import RootLayout from "./_Root/Pages/RootLayout"
 
 const App = () => {
   return (
@@ -12,10 +13,13 @@ const App = () => {
         {/* Public routes*/}
         <Route element={<AuthLayOut/>}>
         <Route path="/sign-in" element={<SignInForm/>}/>
-        <Route path="/sign-in" element={<SignUpForm/>}/>
+        <Route path="/sign-up" element={<SignUpForm/>}/>
       º </Route>
+      
          {/* Private routes*/}
-        <Route index element={<Home/>}/>
+         <Route element= {<RootLayout/>}>
+            <Route index element={<Home/>}/>
+          </Route>
       </Routes>
     </main>
   )
