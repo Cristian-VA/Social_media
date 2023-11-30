@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { Outlet, Navigate} from 'react-router-dom'
 
 const AuthLayOut = () => {
@@ -14,6 +14,13 @@ const AuthLayOut = () => {
       <section className="flex flex-1 justify-center items-center flex-col py-10">
         <Outlet/>
       </section>
+      
+      <div className='w-1/2 h-screen flex justify-center items-center'>
+      <img 
+      src="/assets/Logo.png" 
+      alt=" Logo"
+       />
+       </div>
       </>
     )}
    </>
