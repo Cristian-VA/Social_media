@@ -15,11 +15,12 @@ const AuthLayOut = () => {
         <Outlet/>
       </section>
       
-      <div className='w-1/2 h-screen flex justify-center items-center'>
-      <img 
-      src="/assets/Logo.png" 
-      alt=" Logo"
-       />
+      <div className='w-1/2 h-screen  justify-center items-center hidden xl:flex'>
+        <img 
+        src="/assets/Logo.png" 
+        alt=" Logo"
+        className='p-16'
+        />
        </div>
       </>
     )}
