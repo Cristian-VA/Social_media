@@ -3,10 +3,12 @@ import { z } from "zod"
 import { Button } from "@/components/ui/button"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { SignUpSchema } from "@/lib/Validation"
-
+import Loader from "@/components/Reusable/Loader"
+import { Link } from "react-router-dom"
+import { createUserAccount } from "@/lib/appwrite/api"
 const SignUpForm = () => {
  const isloading = true
   
@@ -23,10 +25,9 @@ const SignUpForm = () => {
   })
  
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof SignUpSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+  async function onSubmit(values: z.infer<typeof SignUpSchema>) {
+   const newUser = await createUserAccount(values)
+   console.log(newUser)
   }
 
   return (
@@ -97,7 +98,7 @@ const SignUpForm = () => {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input type = "text" placeholder="Vibey@gmail.com" className=" h-12 bg-blue-50 border-none rounded-[8px] placeholder:text-slate-500 focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-slate-100" {...field} />
+                      <Input type = "password" placeholder="••••••••" className=" h-12 bg-blue-50 border-none rounded-[8px] placeholder:text-slate-500 focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-slate-100" {...field} />
                     </FormControl>
                     <FormMessage className="text-rose-500" />
                   </FormItem>
@@ -105,11 +106,14 @@ const SignUpForm = () => {
               />
               <Button type="submit" className="h-12 bg-blue-500 px-5 text-white flex gap-2 rounded-[8px] mt-2">
                 {isloading? (
-                  <div>
-                    loading...
-                  </div>
+                  <Loader
+                  color="white"/>
                 ): "Sign Up"}
               </Button>
+              <div className="flex gap-2 mx-auto">
+                <p className="small text-slate-500 "> Already have an account?</p>
+                <Link to="/sign-in" className="small text-blue-500"> Log in</Link>
+              </div>
          </form>
       </div>
     </Form>

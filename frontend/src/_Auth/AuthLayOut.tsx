@@ -19,7 +19,7 @@ const AuthLayOut = () => {
         <img 
         src="/assets/Logo.png" 
         alt=" Logo"
-        className='p-16'
+        className=''
         />
        </div>
       </>
