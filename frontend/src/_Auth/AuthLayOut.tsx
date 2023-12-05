@@ -1,12 +1,17 @@
 
 import { Outlet, Navigate} from 'react-router-dom'
+import ParticleBg from "../components/Reusable/ParticleBg.tsx"
+import { motion } from "framer-motion"
 
 const AuthLayOut = () => {
+
+  
 
   const isAuthenticated = false
 
   return (
    <>
+    <ParticleBg/>
     {isAuthenticated ? (
       <Navigate to="/"/>
     ): (
@@ -16,10 +21,20 @@ const AuthLayOut = () => {
       </section>
       
       <div className='w-1/2 h-screen  justify-center items-center hidden xl:flex'>
-        <img 
-        src="/assets/Logo.png" 
+        <motion.img 
+        src="/assets/LogoBig.png" 
         alt=" Logo"
-        className=''
+        className='max-w-[616.8px]'
+
+        animate = {{
+          y: [ 0,10,0 ]
+        }}
+
+        transition = {{
+          duration:2.5,
+          repeat:Infinity,
+          ease:"easeInOut"
+        }}
         />
        </div>
       </>
