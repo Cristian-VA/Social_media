@@ -8,10 +8,23 @@ import { Input } from "@/components/ui/input"
 import { SignUpSchema } from "@/lib/Validation"
 import Loader from "@/components/Reusable/Loader"
 import { Link } from "react-router-dom"
-import { createUserAccount } from "@/lib/appwrite/api"
+import { useToast } from "@/components/ui/use-toast"
+
+import { useCreateUserAccountMutation, useSignInAccountMutation } from "@/lib/react-query/queriesAndMutations"
+
 const SignUpForm = () => {
- const isloading = true
+
+ const { toast } = useToast()
   
+ const { 
+  mutateAsync: createUserAccount , 
+  isLoading: isCreatingUser 
+} = useCreateUserAccountMutation()
+
+const { 
+  mutateAsync: signInAccount , 
+  isLoading: isSigningIn
+} = useSignInAccountMutation()
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof SignUpSchema>>({
@@ -27,8 +40,26 @@ const SignUpForm = () => {
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof SignUpSchema>) {
    const newUser = await createUserAccount(values)
-   console.log(newUser)
+   
+   if (!newUser){
+    return toast({
+      title: "Sign up failed. Please try again.",
+      
+    })
+   }
+
+  const session = await signInAccount({
+    email: values.email,
+    password: values.password
+  })
+
+  if (!session){
+    return toast ({title: "Sign In failed. Please try Again"})
   }
+
+  }
+
+ 
 
   return (
     
@@ -105,7 +136,7 @@ const SignUpForm = () => {
                 )}
               />
               <Button type="submit" className="h-12 bg-blue-500 px-5 text-white flex gap-2 rounded-[8px] mt-2">
-                {isloading? (
+                {isCreatingUser? (
                   <Loader
                   color="white"/>
                 ): "Sign Up"}
