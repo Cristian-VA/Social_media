@@ -7,23 +7,28 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input"
 import { SignUpSchema } from "@/lib/Validation"
 import Loader from "@/components/Reusable/Loader"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useToast } from "@/components/ui/use-toast"
 
 import { useCreateUserAccountMutation, useSignInAccountMutation } from "@/lib/react-query/queriesAndMutations"
+import { useUserContext } from "@/context/AuthContext"
 
 const SignUpForm = () => {
 
  const { toast } = useToast()
-  
+ const { checkAuthUser, isLoading: isUserLoading} = useUserContext()
+
+ const navigate= useNavigate()
+
+
  const { 
   mutateAsync: createUserAccount , 
-  isLoading: isCreatingUser 
+  isPending: isCreatingUser 
 } = useCreateUserAccountMutation()
 
 const { 
   mutateAsync: signInAccount , 
-  isLoading: isSigningIn
+  isPending: isSigningIn
 } = useSignInAccountMutation()
 
   // 1. Define your form.
@@ -56,7 +61,15 @@ const {
   if (!session){
     return toast ({title: "Sign In failed. Please try Again"})
   }
+    const isLoggedIn = await checkAuthUser()
 
+    if (isLoggedIn){
+      form.reset()
+
+      navigate("/")
+    } else {
+     return toast({title: "Sign up failed. Please try again"})
+    }
   }
 
  
@@ -135,7 +148,7 @@ const {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="h-12 bg-blue-500 px-5 text-white flex gap-2 rounded-[8px] mt-2">
+              <Button type="submit" className="h-12 bg-blue-500 px-5 text-white flex gap-2 rounded-[8px] mt-2 hover:bg-blue-400 transition">
                 {isCreatingUser? (
                   <Loader
                   color="white"/>

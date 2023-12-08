@@ -1,5 +1,8 @@
 import { IContextType, IUser } from '@/types'
 import {createContext, useContext, useEffect, useState } from 'react'
+import { getCurrentUser } from '@/lib/appwrite/api'
+import { useNavigate } from 'react-router-dom'
+
 
 export const INITIAL_USER = {
     id: "",
@@ -26,16 +29,54 @@ const AuthContext = createContext<IContextType>(INITIAL_STATE)
 const AuthProvider = ({children}: { children: React.ReactNode}) => {
   const [user, setUser] = useState<IUser>(INITIAL_USER)
   const [isLoading, setisLoading] = useState(false)
-  const [isAuthenticated, setisAuthenticated] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
   
-  const checkAuthUser = () => {}
+  const navigate = useNavigate()
+
+  const checkAuthUser = async () => {
+    setisLoading(true)
+    try {
+      const currentAccount = await getCurrentUser()
+
+      if (currentAccount){
+        setUser({
+          id: currentAccount.$id,
+          name: currentAccount.name,
+          username: currentAccount.username,
+          email: currentAccount.email,
+          imageUrl: currentAccount.imageURL,
+          bio: currentAccount.bio
+
+        })
+
+        setIsAuthenticated(true)
+
+        return true
+      }
+      return false
+    } catch (error) {
+      console.log(error)
+      return false
+    } finally {
+      setisLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    if (
+      localStorage.getItem("cookieFallback") === "[]" ||
+      localStorage.getItem("cookieFallback") === null 
+    ) navigate("/sign-in")
+    checkAuthUser()
+  }, [])
+  
 
   const value = {
     user,
     setUser,
     isLoading,
     isAuthenticated,
-    setisAuthenticated,
+    setIsAuthenticated,
     checkAuthUser
   }
 
@@ -46,7 +87,8 @@ const AuthProvider = ({children}: { children: React.ReactNode}) => {
   )
 }
 
-export default AuthContext
+export default AuthProvider
 
+export const useUserContext = () => useContext(AuthContext)
 
 //when the user signs In the app should recognize the info of the user throught all the pages, thats why context is needed. 1:45:32
