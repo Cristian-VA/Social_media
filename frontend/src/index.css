@@ -5,8 +5,13 @@
 body{
     color: white;
     background-color: #1e293b;
-  
   }
+
+.bg-dark{
+  background-color:  #1e2836;
+}
+
+
 
 
 /* TypoGraphy */
@@ -32,3 +37,15 @@ body{
 }
 
 
+/* top bar */
+
+.topbar {
+  @apply sticky top-0 z-50 md:hidden w-full
+}
+
+
+/* left side bar */
+
+.leftsidebar{
+  @apply hidden md:flex px-6 py-10 flex-col justify-between min-w-[300px]  ;
+}

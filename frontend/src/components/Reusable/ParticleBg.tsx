@@ -27,7 +27,7 @@ export default function ParticleBg() {
         
             "particles": {
               "number": {
-                "value": 190,
+                "value": 205,
                 "density": {
                   "enable": true,
                   "value_area": 800
@@ -133,9 +133,7 @@ export default function ParticleBg() {
               }
             },
             "retina_detect": true,
-            "background": {
-              "color": '#1e293b', // Background color
-            },
+            
           }
       }
     />
