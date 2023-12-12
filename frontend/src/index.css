@@ -49,3 +49,20 @@ body{
 .leftsidebar{
   @apply hidden md:flex px-6 py-10 flex-col justify-between min-w-[300px]  ;
 }
+
+.leftsidebar-link {
+  @apply rounded-[8px] base hover:bg-blue-500 transition;
+}
+
+
+/* Utility */
+
+.invert-white {
+  @apply invert brightness-0 transition;
+}
+
+@media (max-width: 1025px) {
+  .lg-small {
+      gap: 2.5rem/* 40px */;
+  }
+}

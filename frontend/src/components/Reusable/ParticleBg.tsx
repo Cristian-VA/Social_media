@@ -4,7 +4,7 @@ import { loadFull } from "tsparticles";
 
 export default function ParticleBg() {
   const particlesInit = async (main:any) => {
-    console.log(main);
+   
 
     // you can initialize the tsParticles instance (main) here, adding custom shapes or presets
     // this loads the tsparticles package bundle, it's the easiest method for getting everything ready

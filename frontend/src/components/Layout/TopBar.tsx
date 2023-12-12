@@ -27,16 +27,18 @@ const TopBar = () => {
           <h1 className="h3 font-bold text-center my-auto"> GrooveGram</h1>  
         </Link>
         
-        <div className='flex gap-3'>
+             <div className='flex gap-4'>
            
-            <TbLogout onClick={() => signOut()} className="my-auto h-[30px] w-[30px]  text-blue-500  transition hover:text-blue-400 cursor-pointer" />
-            <Link to={`/profile/${user.id}`}> 
-              <img 
-              src={user.imageUrl || "/assets/DefaultProfile.png" }
-              className='w-[40px] rounded-[8px] my-auto'
-              alt="" />
-            </Link>
-        </div>
+                  <img src="/assets/Icons/Logout.svg" className='w-8 h-8 hover:brightness-0 transition hover:invert cursor-pointer my-auto block' alt="logout" onClick={() => signOut()} />
+                  
+                
+                  <Link to={`/profile/${user.id}`}> 
+                    <img 
+                    src={user.imageUrl || "/assets/DefaultProfile.png" }
+                    className='w-[40px] rounded-[8px] my-auto'
+                    alt="" />
+                  </Link>
+            </div>
 
         
       

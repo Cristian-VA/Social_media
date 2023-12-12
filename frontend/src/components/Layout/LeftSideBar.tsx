@@ -1,28 +1,87 @@
 import { useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, NavLink, useLocation } from 'react-router-dom'
 import { useSignOutAccountMutation } from '@/lib/react-query/queriesAndMutations';
 import { TbLogout } from "react-icons/tb";
 import { useUserContext } from '@/context/AuthContext';
+import { INavLink } from '@/types';
+
+export const sidebarLinks = [
+  {
+    imgURL: "/assets/Icons/Home.svg",
+    route: "/",
+    label: "Home",
+  },
+  {
+    imgURL: "/assets/Icons/Explore.svg",
+    route: "/explore",
+    label: "Explore",
+  },
+  {
+    imgURL: "/assets/Icons/People.svg",
+    route: "/all-users",
+    label: "People",
+  },
+  {
+    imgURL: "/assets/Icons/Bookmark.svg",
+    route: "/saved",
+    label: "Saved",
+  },
+  {
+    imgURL: "/assets/Icons/Post.svg",
+    route: "/create-post",
+    label: "Post",
+  },
+];
+
+
+
 const LeftSideBar = () => {
   const navigate = useNavigate()
+  const { pathname } = useLocation()
   const { mutate: signOut,  isSuccess } = useSignOutAccountMutation()
   const { user } = useUserContext()
+
   useEffect(() => {
     if (isSuccess) {
       navigate(0)
     }
   }, [isSuccess])
 
+  const sideBarLinksmap = sidebarLinks.map((link:INavLink) => {
+    const isActive = pathname === link.route;
+    return (
+      <li
+      key={link.label}
+      className={`group leftsidebar-link  ${
+        isActive && "bg-blue-500"
+      }`}>
+      <NavLink
+        to={link.route}
+        className="flex gap-4 items-center p-3 small">
+        <img
+          src={link.imgURL}
+          alt={link.label}
+          className={` w-6 h-6 group-hover:brightness-0 group-hover:invert ${
+            isActive && "invert-white" 
+          }`}
+        />
+        {link.label}
+      </NavLink>
+    </li>
+  
+    )
+  })
+
   return (
     <nav className='bg-dark leftsidebar '>
-      <div className='flex flex-col gap-10 h-full'>
+      <div className='flex flex-col  gap-7 h-full'>
         <Link to="/" className='flex gap-2'>
             <img 
                   src="/assets/Logo.png" 
                   alt=" Logo"
                   className='w-[51px] my-auto'
                   />
-            <h1 className="h2 font-bold text-center my-auto"> GrooveGram</h1>  
+            <h1 className="h3 font-bold text-center my-auto"> GrooveGram</h1>  
         </Link>
 
         <Link to={`/profile/${user.id}`}> 
@@ -37,11 +96,20 @@ const LeftSideBar = () => {
                   <h2 className='base text-slate-500'> @{user.username}</h2>
               </div>
             </div>
+          
         </Link>
         
+        <ul className='flex flex-col gap-6'>
+        {sideBarLinksmap}
+            
+        </ul>
+
       </div>
 
-      <TbLogout onClick={() => signOut()} className="my-auto h-[30px] w-[30px]  text-blue-500  transition hover:text-blue-400 cursor-pointer" />
+      <div className='hover:brightness-0 transition hover:invert p-3 flex gap-4 cursor-pointer  w-[150px]' onClick={() => signOut()}>
+          <img src="/assets/Icons/Logout.svg" className='w-6 h-6  transition ' alt="" />
+          <p className=' my-auto small'>Log out</p>
+      </div>
     </nav>
   )
 }
