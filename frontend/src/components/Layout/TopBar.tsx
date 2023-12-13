@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSignOutAccountMutation } from '@/lib/react-query/queriesAndMutations';
-import { TbLogout } from "react-icons/tb";
+
 import { useUserContext } from '@/context/AuthContext';
 
 const TopBar = () => {
@@ -13,7 +13,7 @@ const TopBar = () => {
       navigate(0)
     }
   }, [isSuccess])
-  
+  console.log( user )
 
   return (
     <section className='topbar bg-dark'>
@@ -52,4 +52,3 @@ const TopBar = () => {
 
 export default TopBar
 
-//2:22:17
