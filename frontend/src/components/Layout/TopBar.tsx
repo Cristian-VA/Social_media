@@ -13,7 +13,7 @@ const TopBar = () => {
       navigate(0)
     }
   }, [isSuccess])
-  console.log( user )
+
 
   return (
     <section className='topbar bg-dark'>
