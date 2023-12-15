@@ -58,5 +58,3 @@ const FileUploader = ({ fieldChange, mediaUrl}:IFileUploader) => {
 }
 
 export default FileUploader
-
-//3:03:14

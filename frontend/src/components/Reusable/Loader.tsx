@@ -1,6 +1,6 @@
 
 
-const Loader = ({color}:any) => {
+const Loader = ({color, width}:any) => {
   return (
     <div>
     {color === "white"? (
