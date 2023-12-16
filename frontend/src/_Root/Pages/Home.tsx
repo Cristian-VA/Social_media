@@ -8,7 +8,7 @@ const Home = () => {
 
   return (
     <div className=' flex flex-1'>
-      <div className='container'>
+      <div className='container '>
         <div className="home-posts ">
         
               <h1 className='base md:text-[24px] w-full text-left'> Home Feed</h1>

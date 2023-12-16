@@ -1,4 +1,4 @@
-import React from 'react'
+
 import FormPost from '@/components/Reusable/Forms/FormPost'
 
 const CreatePost = () => {

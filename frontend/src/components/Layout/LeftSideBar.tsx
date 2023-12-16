@@ -66,7 +66,7 @@ const LeftSideBar = () => {
               alt="" />
 
               <div>
-                  <h1 className='h3 capitalize'>{user.name}</h1>
+                  <h1 className='h3 capitalize font-semibold'>{user.name}</h1>
                   <h2 className='base text-slate-500'> @{user.username}</h2>
               </div>
             </div>

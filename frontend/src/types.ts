@@ -1,3 +1,4 @@
+import { Models } from "appwrite"
 
 
 export type INewUser = {
@@ -49,5 +50,11 @@ export type INewPost = {
     file: File[],
     location?: string,
     tags?: string,
+
+}
+
+export type PostTypeProps = {
+    post: Models.Document,
+    userId: string
 
 }

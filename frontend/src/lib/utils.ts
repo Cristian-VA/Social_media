@@ -23,3 +23,8 @@ export function calculateDaysDifference(dateString:any) {
     return `${daysDifference} days ago`;
   }
 }
+
+export const checkIsLiked = (likeList:string[], userId:string) => {
+  return likeList.includes(userId)
+
+}
