@@ -1,7 +1,7 @@
 import { INewPost } from './../../types';
 import { INewUser } from "@/types"
 import {useQuery, useMutation, useQueryClient, useInfiniteQuery} from "@tanstack/react-query"
-import { createUserAccount, signInAccount, signOutAccount, createPost, getRecentPosts, likePost, savePost, deleteSavedPost } from "../appwrite/api"
+import { createUserAccount, signInAccount, signOutAccount, createPost, getRecentPosts, likePost, savePost, deleteSavedPost, getCurrentUser } from "../appwrite/api"
 import { QUERY_KEYS } from './queryKeys';
 
 
@@ -115,3 +115,10 @@ export const useDeleteSavedPostMutation = () => {
         }
     })
 }
+
+export const useGetCurrentUserMutation = () => {
+    return useQuery({
+      queryKey: [QUERY_KEYS.GET_CURRENT_USER],
+      queryFn: getCurrentUser,
+    });
+  };
