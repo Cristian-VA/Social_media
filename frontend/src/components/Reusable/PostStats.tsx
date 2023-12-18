@@ -1,13 +1,15 @@
 import React, {useState, useEffect} from 'react'
 import { PostTypeProps } from '@/types'
-import { useLikePostMutation, usesSavedPostMutation, useDeleteSavedPostMutation } from '@/lib/react-query/queriesAndMutations'
+import { useLikePostMutation, usesSavedPostMutation, useDeleteSavedPostMutation, useGetCurrentUserMutation } from '@/lib/react-query/queriesAndMutations'
 import { useUserContext } from '@/context/AuthContext'
 import { Models } from 'appwrite'
 import { checkIsLiked } from '@/lib/utils'
+import { ModalLikes } from './ModalLikes'
+
 
 const PostStats = ({post, userId}:PostTypeProps) => {
-  const likesList = post.likes.map((user: Models.Document) => user.$id)
-  const likesInfo = post.likes.map((user: Models.Document) => user)
+  const likesList = post.likes.map((currentUser: Models.Document) => currentUser.$id)
+  const likesInfo = post.likes.map((currentUser: Models.Document) => currentUser)
   
   
 
@@ -18,23 +20,27 @@ const PostStats = ({post, userId}:PostTypeProps) => {
   const {mutate: savePost} = usesSavedPostMutation()
   const {mutate: deletePost} = useDeleteSavedPostMutation()
 
-  const likeDisplayMessage = lastLike === 1 ? `${likesInfo[lastLike]?.name} and ${likesInfo[0]?.name} liked this` : 
-  lastLike > 1? `${likesInfo[lastLike]?.name} and ${lastLike} others liked this` : `${likesInfo[lastLike]?.name} liked this`
+  const { data: currentUser } = useGetCurrentUserMutation() //need to use queries for refetching so we use the mutation and not the context
+  const userWhoLike = likesInfo[lastLike]?.username === currentUser?.username ? "You" : likesInfo[lastLike]?.username
+ 
 
+  const likeDisplayMessage = lastLike === 1 ? `${userWhoLike} and ${likesInfo[0]?.username} liked this` : 
+  lastLike > 1? `${userWhoLike} and ${lastLike} others liked this` : `${userWhoLike} liked this`
+ 
 
-  const {user} =useUserContext()
+  
 
 
   const handleLikePost = (e:React.MouseEvent) => {
     e.stopPropagation()//will only like the post, it will stop it from navigating to post details.
 
     let newLikes= [...likes]
-    const hasLiked= newLikes.includes(user.id)
+    const hasLiked= newLikes.includes(currentUser?.$id)
   
     if (hasLiked){
-      newLikes=  newLikes.filter((id) => id !== user.id)
+      newLikes=  newLikes.filter((id) => id !== currentUser?.$id)
     } else {
-      newLikes.push(user.id)
+      newLikes.push(currentUser?.$id)
     }
 
     setLikes(newLikes)
@@ -46,7 +52,7 @@ const PostStats = ({post, userId}:PostTypeProps) => {
   const handleSavePost = (e:React.MouseEvent) => {
     
   }
-  console.log(likesInfo)
+
   
   return (
     <div className='flex justify-between items-center z-20'>
@@ -56,22 +62,30 @@ const PostStats = ({post, userId}:PostTypeProps) => {
              "/assets/Icons/Heart.svg"}
 
             alt="like" 
-            className='w-6 h-6  md:h-7 md:w-7 cursor-pointer'
+            className='w-5 h-5  md:h-7 md:w-7 cursor-pointer my-auto'
             onClick={handleLikePost}
             />
-            <p className=' lg:text-[18px]'>{likes.length}</p>
-            <p className='text-slate-500 text-[12px] text-right'>{likesInfo[lastLike]?.name? likeDisplayMessage : "Loading Like..."}</p>
+            <p className=' lg:text-[18px] text-[14px] my-auto'>{likes.length}</p>
+            <div>
+              
+            <ModalLikes
+            btnText={likesInfo[lastLike]?.username? likeDisplayMessage : likes.length === 0? "Be the first to like" : "Liking post..."}
+            PeopleWhoLiked = {likesInfo}
+            /> 
+
+            </div>
+           
         </div>
 
-        <div className='flex'>
+       
         <img src={isSaved? 
             "/assets/Icons/BookmarkSfilled.svg" :
              "/assets/Icons/BookmarkS.svg"}
             alt="like" 
-            className='w-6 h-6 md:h-7 md:w-7 cursor-pointer'
+            className='w-5 h-5 mb-auto md:h-7 md:w-7 cursor-pointer my-auto'
             onClick={handleSavePost}
             />
-        </div>
+  
        
     </div>
   )
