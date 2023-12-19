@@ -25,7 +25,7 @@ export function ModalLikes({btnText, PeopleWhoLiked}: any) {
         </div>
 
         <Link to={`/profile/${like.$id}`} className="my-auto py-1 px-2 bg-blue-500 rounded-[8px] text-[14px] transition hover:bg-blue-400">
-          View Porfile
+          View Profile
         </Link>
       </div>
     )
@@ -36,13 +36,12 @@ export function ModalLikes({btnText, PeopleWhoLiked}: any) {
       <DialogTrigger asChild>
         <Button  className="text-slate-500 text-[10px] sm:text-[12px] md:text-[14px] leading-4 my-auto  px-0 hover:underline transition">{btnText}</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] h-full bg-dark sm:h-[300px] md:h-[500px]  border-2 border-slate-600 sm:rounded-[8px]  ">
+      <DialogContent className="sm:max-w-[425px] h-full bg-dark sm:h-[300px] md:h-[500px]   border-slate-600 sm:rounded-[8px]   ">
         <DialogHeader>
           <DialogTitle>Total Likes {PeopleWhoLiked.length}</DialogTitle>
-          
         </DialogHeader>
-        <div className="flex items-start gap-4 py-4 overflow-scroll custom-scrollbar">
-          <div className="flex flex-col items-start  gap-4 w-full">
+        <div className="flex items-start gap-4 py-4 overflow-scroll custom-scrollbar ">
+          <div className="flex flex-col items-start justify-start gap-4 w-full px-2 ">
             {PeopleWhoLiked.length? LikesMap : <p className="block my-auto mx-auto">Nothing here..</p>  }
             
           </div>

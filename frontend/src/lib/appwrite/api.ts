@@ -230,6 +230,7 @@ export async function deleteSavedPost(savedPostId:string){
             return { status: "deleted"}
             
     } catch (error) {
-        
+        console.log(error)
     }
 }
+
