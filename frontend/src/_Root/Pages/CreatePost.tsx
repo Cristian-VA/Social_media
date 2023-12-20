@@ -14,7 +14,7 @@ const CreatePost = () => {
               <h1 className='base md:text-[24px] my-auto'> Create Post</h1>
 
           </div>
-        <FormPost/>
+        <FormPost action="Create"/>
 
         </div>
 

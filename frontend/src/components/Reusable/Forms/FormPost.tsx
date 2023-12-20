@@ -14,18 +14,22 @@ import { useUserContext } from '@/context/AuthContext';
 
 import { useToast } from '@/components/ui/use-toast'
 import { useNavigate } from 'react-router-dom'
-import { useCreatePostMutation } from '@/lib/react-query/queriesAndMutations'
-
+import { useCreatePostMutation, useUpdatePostMutation, useDeletePostMutation} from '@/lib/react-query/queriesAndMutations'
+import Loader from '../Loader'
  type IPostFrom = {
   post?:Models.Document
+  action: "Update" | "Create"
  }
 
 
-const FormPost = ({post}:IPostFrom) => {
+const FormPost = ({post, action}:IPostFrom) => {
   const { user } = useUserContext()
   const { toast } = useToast()
   const navigate = useNavigate()
   const {mutateAsync: createPost, isPending:IsLoadingPost} = useCreatePostMutation()
+  const {mutateAsync: updatePost, isPending:IsUpdatingPost} = useUpdatePostMutation()
+  const {mutateAsync: deletePost, isPending:IsDeletingPost} = useDeletePostMutation()
+  console.log(post)
 
     const form = useForm<z.infer<typeof PostValidation>>({
         resolver: zodResolver(PostValidation),
@@ -39,6 +43,20 @@ const FormPost = ({post}:IPostFrom) => {
      
       // 2. Define a submit handler.
       async function onSubmit(values: z.infer<typeof PostValidation>) {
+        if (post && action === "Update"){
+          const updatedPost = await updatePost({ 
+            ...values,
+            postId: post.$id,
+            imageId: post?.imageID,
+            imageUrl: post?.ImageUrl
+          } )
+
+          if (!updatedPost){
+            toast({title: "Please try again"})
+          }
+
+          return navigate(`/posts/${post.$id}`)
+        }
        const newPost = await createPost({
         ...values,
         userId: user.id
@@ -54,6 +72,17 @@ const FormPost = ({post}:IPostFrom) => {
 
 
   return (
+    <>
+    {IsUpdatingPost || IsDeletingPost || IsLoadingPost ? (
+        <div className="fixed top-0 flex flex-col justify-center items-center h-screen">
+        <Loader
+        color= "white"
+        shape= "spiner"
+        width= "w-[90px] my-auto"
+        />
+         <p>Updating Post...</p>
+        </div>
+    ) :(
     <Form {...form}>
     <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col w-full max-w-5xl gap-8">
       <FormField
@@ -78,9 +107,11 @@ const FormPost = ({post}:IPostFrom) => {
           <FormItem>
             <FormLabel>Add media</FormLabel>
               <FormControl>
+
                  <FileUploader 
-                 mediaUrl= { post?.imageUrl}
+                 mediaUrl= { post?.ImageUrl}
                  fieldChange = {field.onChange}/>
+
               </FormControl>
             
             <FormMessage className='text-rose-500' />
@@ -125,6 +156,8 @@ const FormPost = ({post}:IPostFrom) => {
       </div>
     </form>
   </Form>
+  ) }
+  </>
   )
 }
 

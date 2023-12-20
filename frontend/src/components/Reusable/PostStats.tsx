@@ -61,23 +61,9 @@ const PostStats = ({post, userId}:PostTypeProps) => {
 
  
 
-  const handleSavePost = (e:React.MouseEvent) => {
-    e.stopPropagation()//will only like the post, it will stop it from navigating to post details.
+  
 
-    
-    if (savedPost){
-      setIsSaved(false)
-      deletePost({savedPostId: savedPost?.$id})
-
-    } else {
-      savePost({postId: post.$id, userId})
-      setIsSaved(true)
-      
-    }
-    
-  }
-
-  const handleSavePost2 = (
+  const handleSavePost = (
     e: React.MouseEvent<HTMLImageElement, MouseEvent>
   ) => {
     e.stopPropagation();
@@ -121,7 +107,7 @@ const PostStats = ({post, userId}:PostTypeProps) => {
            "/assets/Icons/BookmarkS.svg"}
           alt="like" 
           className='w-5 h-5 mb-auto md:h-7 md:w-7 cursor-pointer my-auto'
-          onClick={handleSavePost2}
+          onClick={handleSavePost}
           />
        )}
 

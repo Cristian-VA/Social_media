@@ -53,6 +53,17 @@ export type INewPost = {
 
 }
 
+export type IUpdatePost = {
+    postId: string,
+    caption: string,
+    imageId: string,
+    imageUrl: string
+    file: File[],
+    location?: string,
+    tags?: string,
+
+}
+
 export type PostTypeProps = {
     post: Models.Document,
     userId: string
