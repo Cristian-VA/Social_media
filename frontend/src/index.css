@@ -99,6 +99,7 @@ body{
   @apply flex flex-col flex-1 items-center gap-10 overflow-scroll py-10 px-5 md:px-8 lg:p-14 custom-scrollbar;
 }
 
+
 /* Home */
 
 .home-posts {
@@ -107,4 +108,13 @@ body{
 
 .home-creators {
   @apply hidden xl:flex flex-col w-72 2xl:w-[400px] px-6 py-10 gap-10  overflow-scroll custom-scrollbar;
+}
+
+/*PostDetails*/
+
+.post-details-card{
+  @apply w-full bg-dark max-w-5xl border-2 border-slate-600 rounded-[8px] flex flex-col xl:flex-row
+}
+.post_details-img {
+  @apply h-80 lg:h-[480px] xl:w-[48%] rounded-t-[24px] xl:rounded-l-[24px] xl:rounded-tr-none object-cover p-5 bg-dark;
 }

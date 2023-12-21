@@ -34,7 +34,7 @@ export function ModalLikes({btnText, PeopleWhoLiked}: any) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button  className="text-slate-500 text-[10px] sm:text-[12px] md:text-[14px] leading-4 my-auto  px-0 hover:underline transition">{btnText}</Button>
+        <Button variant="ghost" className="text-slate-500 text-[10px] sm:text-[12px] md:text-[14px] leading-4 my-auto  px-0 hover:underline transition">{btnText}</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] h-full bg-dark sm:h-[300px] md:h-[500px]   border-slate-600 sm:rounded-[8px]   ">
         <DialogHeader>

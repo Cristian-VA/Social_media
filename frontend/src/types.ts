@@ -65,7 +65,7 @@ export type IUpdatePost = {
 }
 
 export type PostTypeProps = {
-    post: Models.Document,
+    post?: Models.Document,
     userId: string
 
 }

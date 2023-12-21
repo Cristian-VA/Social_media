@@ -34,8 +34,8 @@ const TopBar = () => {
                 
                   <Link to={`/profile/${user.id}`}> 
                     <img 
-                    src={user.imageUrl || "/assets/DefaultProfile.png" }
-                    className='w-[40px] rounded-[8px] my-auto'
+                    src={user.imageUrl || "/assets/Icons/loading.svg" }
+                    className='w-[40px] rounded-[8px] my-auto bg-slate-600'
                     alt="" />
                   </Link>
             </div>

@@ -13,7 +13,7 @@ const LeftSideBar = () => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const { mutate: signOut,  isSuccess } = useSignOutAccountMutation()
-  const { user } = useUserContext()
+  const { user, isLoading } = useUserContext()
 
   useEffect(() => {
     if (isSuccess) {
@@ -61,13 +61,17 @@ const LeftSideBar = () => {
         <Link to={`/profile/${user.id}`}> 
             <div className='flex gap-4'>
               <img 
-              src={user.imageUrl || "/assets/DefaultProfile.png" }
-              className='w-[70px] rounded-[8px] my-auto'
+              src={user.imageUrl || "/assets/Icons/loading.svg" }
+              className='w-[70px] rounded-[8px] my-auto bg-slate-700'
               alt="" />
 
               <div>
+                {isLoading? <h1 className='my-5 base '>Loading info...</h1>: (
+                  <>
                   <h1 className='h3 capitalize font-semibold'>{user.name}</h1>
                   <h2 className='base text-slate-500'> @{user.username}</h2>
+                  </>
+                  )}
               </div>
             </div>
           

@@ -1,5 +1,5 @@
 import { ID, Query} from "appwrite"; //CREATES A RANDOM ID FOR EACH NEW USER
-import { INewPost, INewUser, IUpdatePost, PostTypeProps } from "@/types";
+import { INewPost, INewUser, IUpdatePost } from "@/types";
 import { account, appwriteConfig, avatars, databases, storage } from "./config";
 
 
