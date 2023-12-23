@@ -72,9 +72,17 @@ const {
     }
   }
 
+
+
+
  
 
   return (
+   <div>
+    {isUserLoading? (
+    <div className="w-full">
+
+    </div>) : (
     
       <Form {...form}>
         <div className=" flex justify-center items-center flex-col w-[300px]">
@@ -161,7 +169,8 @@ const {
          </form>
       </div>
     </Form>
-
+    )}
+    </div>
   )
 }
 

@@ -1,12 +1,43 @@
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
+import SearchResults from "@/components/Reusable/SearchResults"
+import GridPostsLists from "@/components/Reusable/GridPostsLists"
+import { useSearchPost, useGetInfinitePostsMutation } from "@/lib/react-query/queriesAndMutations"
+import useDebounce from "@/Hooks/useDebounce"
+import Loader from "@/components/Reusable/Loader"
+import { useInView } from 'react-intersection-observer';
 
+import { useEffect } from "react"
 const Explore = () => {
 
   const [searchValue, setSearchValue] = useState("")
-  const shouldShowSearchResults = searchValue !== ""
-  const shouldShowPosts = !shouldShowSearchResults
- 
+  const {ref, inView} = useInView() 
+  const debouncedTerm = useDebounce(searchValue, 500)
+  const {data:searchedPosts, isFetching: isSearchFetching} = useSearchPost(debouncedTerm)
+  const {data:posts, fetchNextPage, hasNextPage} = useGetInfinitePostsMutation()
+
+  const shouldShowSearchResults = searchValue !== "" //if search Value is empty shouldShowSearchResults = false
+  const shouldShowPosts = !shouldShowSearchResults && posts?.pages?.every((item) => item?.documents?.length === 0)
+
+  useEffect(() => {
+    if (inView && !searchValue) {
+      fetchNextPage();
+    }
+  }, [inView, searchValue]);
+  
+  
+  if (!posts){
+    return (
+      <div className=" flex justify-center flex-col w-full gap-2 items-center h-full">
+      <Loader
+      color= "white"
+      shape= "spiner"
+      width= "w-[90px] my-auto"
+      />
+       <p>Loading Posts...</p>
+      </div>
+    )
+  }
 
   return (
     <div className='container'>
@@ -44,9 +75,31 @@ const Explore = () => {
       </div>
       </div>
 
-      <div className="flex flex-wrap gap-9 w-full max-w-5xl">
+      <div className="flex flex-wrap gap-9 w-full max-w-5xl h-full">
+
+        {shouldShowSearchResults? 
+        <SearchResults
+           isSearchFetching = {isSearchFetching}
+           searchedPosts = {searchedPosts}
+           
+           /> : 
+         shouldShowPosts?  ( <p> End of Posts</p>) : 
+         posts?.pages?.map((item, index) => (
+          <GridPostsLists key={`page-${index}`} posts= {item?.documents}
+          />
+         ))}
 
       </div>
+
+      {hasNextPage && !searchValue && (
+        <div ref={ref} className="mt-10">
+                <Loader
+                color= "white"
+                shape= "spiner"
+                width= "w-[70px] my-auto"
+                />
+        </div>
+      )}
      
 
     </div>

@@ -16,10 +16,10 @@ import { useUserContext } from "@/context/AuthContext"
 const SignInForm = () => {
 
  const { toast } = useToast()
- const { checkAuthUser, isLoading: isUserLoading} = useUserContext()
-
+ const { checkAuthUser } = useUserContext()
+ 
  const navigate= useNavigate()
-
+  
 
 
 const { 
@@ -111,7 +111,8 @@ const {
               <Button type="submit" className="h-12 bg-blue-500 px-5 text-white flex gap-2 rounded-[8px] mt-2 hover:bg-blue-400 transition">
                 {isSigningIn? (
                   <Loader
-                  color="white"/>
+                  color="white"
+                  shape = "circle"/>
                 ): "Log in"}
               </Button>
               <div className="flex gap-2 mx-auto">

@@ -11,7 +11,7 @@ import { Models } from "appwrite";
 import { checkIsLiked } from "@/lib/utils";
 import { ModalLikes } from "./ModalLikes";
 
-const PostStats = ({ post, userId }: PostTypeProps) => {
+const PostStats = ({ post, userId, noText }: PostTypeProps) => {
   const likesList = post?.likes.map(
     (currentUser: Models.Document) => currentUser.$id
   );
@@ -91,6 +91,7 @@ const PostStats = ({ post, userId }: PostTypeProps) => {
           onClick={handleLikePost}
         />
         <p className=" lg:text-[18px] text-[14px] my-auto">{likes.length}</p>
+        {!noText && (
         <div>
           <ModalLikes
             btnText={
@@ -103,6 +104,7 @@ const PostStats = ({ post, userId }: PostTypeProps) => {
             PeopleWhoLiked={likesInfo}
           />
         </div>
+        )}
       </div>
 
       {isLoadingSave || isLoadingDelete ? (

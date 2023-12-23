@@ -118,3 +118,10 @@ body{
 .post_details-img {
   @apply h-80 lg:h-[480px] xl:w-[48%] rounded-t-[24px] xl:rounded-l-[24px] xl:rounded-tr-none object-cover p-5 bg-dark;
 }
+
+/* Explore Page */
+
+.grid-container{
+  @apply  grid grid-cols-1  lg:grid-cols-2 xl:grid-cols-3 gap-6 w-full
+}
+

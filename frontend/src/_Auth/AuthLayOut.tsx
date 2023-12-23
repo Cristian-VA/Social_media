@@ -3,6 +3,9 @@ import { Outlet, Navigate} from 'react-router-dom'
 import ParticleBg from "../components/Reusable/ParticleBg.tsx"
 import { motion } from "framer-motion"
 
+
+
+
 const AuthLayOut = () => {
 
   
@@ -16,6 +19,7 @@ const AuthLayOut = () => {
       <Navigate to="/"/>
     ): (
       <>
+      
       <section className="flex flex-1 justify-center items-center flex-col py-10">
         <Outlet/>
       </section>
