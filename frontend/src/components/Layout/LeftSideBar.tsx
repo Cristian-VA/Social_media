@@ -1,19 +1,21 @@
 import { useEffect } from 'react'
 import { Link, useNavigate, NavLink, useLocation } from 'react-router-dom'
 import { useSignOutAccountMutation } from '@/lib/react-query/queriesAndMutations';
-import { TbLogout } from "react-icons/tb";
+
 import { useUserContext } from '@/context/AuthContext';
 import { INavLink } from '@/types';
 import { sidebarLinks } from '@/constants';
-
+import LogOutModal from '../Reusable/LogOutModal';
 
 
 
 const LeftSideBar = () => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
-  const { mutate: signOut,  isSuccess } = useSignOutAccountMutation()
+  const { mutate: signOut,  isSuccess, isPending } = useSignOutAccountMutation()
   const { user, isLoading } = useUserContext()
+
+  
 
   useEffect(() => {
     if (isSuccess) {
@@ -46,8 +48,11 @@ const LeftSideBar = () => {
     )
   })
 
+ 
+
   return (
     <nav className='bg-dark leftsidebar '>
+      
       <div className='flex flex-col  gap-7 h-full'>
         <Link to="/" className='flex gap-2'>
             <img 
@@ -88,6 +93,8 @@ const LeftSideBar = () => {
           <img src="/assets/Icons/Logout.svg" className='w-6 h-6  transition ' alt="" />
           <p className=' my-auto small'>Log out</p>
       </div>
+     {isPending? <LogOutModal/>: ""}
+
     </nav>
   )
 }

@@ -12,6 +12,10 @@ body{
   background-color:  #1e2836;
 }
 
+.btn-blue {
+  @apply h-12 bg-blue-500 px-5 text-white rounded-[8px] mt-2 hover:bg-blue-400 transition
+}
+
 
 
 

@@ -9,7 +9,6 @@ import { SignUpSchema } from "@/lib/Validation"
 import Loader from "@/components/Reusable/Loader"
 import { Link, useNavigate } from "react-router-dom"
 import { useToast } from "@/components/ui/use-toast"
-
 import { useCreateUserAccountMutation, useSignInAccountMutation } from "@/lib/react-query/queriesAndMutations"
 import { useUserContext } from "@/context/AuthContext"
 
@@ -80,7 +79,13 @@ const {
   return (
    <div>
     {isUserLoading? (
-    <div className="w-full">
+    <div className="w-full h-full flex justify-center items-center flex-col gap-4">
+       <Loader
+                color= "white"
+                shape= "spiner"
+                width= "w-[90px] my-auto"
+                />
+                 <p>Redirecting...</p>
 
     </div>) : (
     

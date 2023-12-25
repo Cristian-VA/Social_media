@@ -3,7 +3,7 @@ import { useUserContext } from "@/context/AuthContext"
 import { Link } from "react-router-dom"
 import PostStats from "./PostStats"
 type GridPostListType = {
-    posts:Models.Document[],
+    posts?:Models.Document[],
     showStats?: boolean,
     showUser?: boolean
 

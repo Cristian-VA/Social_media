@@ -331,27 +331,6 @@ export async function deletePost(postId:string, imageId: string){
     }
 }
 
-export async function getInfinitePosts({pageParam}: {pageParam:number}){
-    const queries:any[] = [Query.orderDesc("$updatedAt"), Query.limit(2)]
-
-    if(pageParam) {
-        queries.push(Query.cursorAfter(pageParam.toString())) //skips the first 10 and shows the entries for 10-20, used for pagination
-    }
-
-    try {
-        const posts= await databases.listDocuments(
-            appwriteConfig.databaseId,
-            appwriteConfig.postCollectionId,
-            queries //queries are an array 
-        )
-
-        if (!posts) throw Error
-        return posts
-
-    } catch (error) {
-        console.log(error)
-    }
-}
 
 
 
@@ -373,3 +352,84 @@ export async function searchPost(searchString:string){
         console.log(error)
     }
 }
+
+export async function getAllUsers({pageParam}: {pageParam:number}){
+    const queries:any[] = [Query.orderDesc("$updatedAt"), Query.limit(6)]
+
+    if(pageParam) {
+        queries.push(Query.cursorAfter(pageParam.toString())) //skips the first 10 and shows the entries for 10-20, used for pagination
+    }
+
+    try {
+        const posts= await databases.listDocuments(
+            appwriteConfig.databaseId,
+            appwriteConfig.userCollectionId,
+            queries //queries are an array 
+        )
+
+        if (!posts) throw Error
+        return posts
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export async function getInfinitePosts({pageParam}: {pageParam:number}){
+    const queries:any[] = [Query.orderDesc("$updatedAt"), Query.limit(6)]
+
+    if(pageParam) {
+        queries.push(Query.cursorAfter(pageParam.toString())) //skips the first 10 and shows the entries for 10-20, used for pagination
+    }
+
+    try {
+        const posts= await databases.listDocuments(
+            appwriteConfig.databaseId,
+            appwriteConfig.postCollectionId,
+            queries //queries are an array 
+        )
+
+        if (!posts) throw Error
+        return posts
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export async function getUserId(userId:string){
+    try {
+        const user = await databases.getDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.userCollectionId,
+            userId)
+            
+        return user
+        
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
+
+export async function getPostByUserID(userId:string){
+    const queries:any[] =  [Query.equal("creator", userId)]
+
+    try {
+        const userPosts = await databases.listDocuments(
+            appwriteConfig.databaseId,
+            appwriteConfig.postCollectionId,
+            queries
+            )
+            
+        return userPosts
+        
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
+

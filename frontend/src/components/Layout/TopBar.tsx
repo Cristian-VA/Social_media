@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSignOutAccountMutation } from '@/lib/react-query/queriesAndMutations';
-
+import LogOutModal from '../Reusable/LogOutModal';
 import { useUserContext } from '@/context/AuthContext';
 
 const TopBar = () => {
   const navigate = useNavigate()
-  const { mutate: signOut,  isSuccess } = useSignOutAccountMutation()
+  const { mutate: signOut,  isSuccess, isPending } = useSignOutAccountMutation()
   const { user } = useUserContext()
   useEffect(() => {
     if (isSuccess) {
@@ -14,9 +14,11 @@ const TopBar = () => {
     }
   }, [isSuccess])
 
+  
 
   return (
     <section className='topbar bg-dark'>
+     
       <div className='flex justify-between py-4 px-6'>
         <Link to="/" className='flex gap-2'>
           <img 
@@ -46,6 +48,7 @@ const TopBar = () => {
 
 
       </div>
+      {isPending? <LogOutModal/>: ""}
     </section>
   )
 }

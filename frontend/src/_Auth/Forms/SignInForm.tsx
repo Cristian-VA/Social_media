@@ -16,7 +16,7 @@ import { useUserContext } from "@/context/AuthContext"
 const SignInForm = () => {
 
  const { toast } = useToast()
- const { checkAuthUser } = useUserContext()
+ const { checkAuthUser, isLoading } = useUserContext()
  
  const navigate= useNavigate()
   
@@ -62,7 +62,19 @@ const {
  
 
   return (
-    
+    <>
+    {isLoading? (
+      <div className="w-full h-full flex justify-center items-center flex-col gap-4">
+      <Loader
+               color= "white"
+               shape= "spiner"
+               width= "w-[90px] my-auto"
+               />
+                <p>Log in successfull, Redirecting...</p>
+
+   </div>
+
+    ):(
       <Form {...form}>
         <div className=" flex justify-center items-center flex-col w-[300px]">
           <div className="flex gap-4">
@@ -74,7 +86,7 @@ const {
               <h1 className="h1 font-bold text-center  "> GrooveGram</h1>
           </div>
   
-           <h1 className="h3 pt-3"> Log in to your account</h1>
+           <h1 className="h2 pt-3"> Log in to your account</h1>
            <h1 className="text-slate-500 base text-center pt-5"> Welcome back! Please enter your details</h1>
           
         
@@ -122,7 +134,9 @@ const {
          </form>
       </div>
     </Form>
-
+    )}
+    
+  </>
   )
 }
 

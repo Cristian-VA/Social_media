@@ -5,7 +5,7 @@ import GridPostsLists from "@/components/Reusable/GridPostsLists"
 import { useSearchPost, useGetInfinitePostsMutation } from "@/lib/react-query/queriesAndMutations"
 import useDebounce from "@/Hooks/useDebounce"
 import Loader from "@/components/Reusable/Loader"
-import { useInView } from 'react-intersection-observer';
+import { useInView } from 'react-intersection-observer'
 
 import { useEffect } from "react"
 const Explore = () => {
@@ -15,7 +15,7 @@ const Explore = () => {
   const debouncedTerm = useDebounce(searchValue, 500)
   const {data:searchedPosts, isFetching: isSearchFetching} = useSearchPost(debouncedTerm)
   const {data:posts, fetchNextPage, hasNextPage} = useGetInfinitePostsMutation()
-
+  console.log(posts)
   const shouldShowSearchResults = searchValue !== "" //if search Value is empty shouldShowSearchResults = false
   const shouldShowPosts = !shouldShowSearchResults && posts?.pages?.every((item) => item?.documents?.length === 0)
 
@@ -61,10 +61,11 @@ const Explore = () => {
         <hr  className='border-2 border-slate-600 opacity-20  w-full' />
       </div>
 
-      <div className="flex flex-between w-full max-w-5xl    ">
-      <h3 className='text-[16px] md:text-[20px]  w-full my-auto'>Trending</h3>
+      <div className="flex justify-between w-full max-w-5xl    ">
+      <h3 className="text-[16px] md:text-[20px]   my-auto bg-slate-700 bg-opacity-60 px-4 py-2 rounded-[8px]">Trending</h3>
 
-      <div className="flex-center flex hover:bg-slate-500 transition gap-3 rounded-[8px] bg-blue-500 px-4 py-2 cursor-pointer">
+      <div className="flex-center flex gap-3 rounded-[8px] bg-slate-700 bg-opacity-60 px-4 py-2 cursor-pointer">
+      
         <p className="text-[16px] md:text-[18px] font-light my-auto">All</p>
         <img 
           src="/assets/Icons/Filter.svg"
