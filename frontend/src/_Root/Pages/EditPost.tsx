@@ -3,6 +3,9 @@ import FormPost from '@/components/Reusable/Forms/FormPost'
 import { useParams } from 'react-router-dom'
 import { useGetPostByIdMutation } from '@/lib/react-query/queriesAndMutations'
 import Loader from '@/components/Reusable/Loader'
+
+
+
 const EditPost = () => {
 const { id } = useParams()
 const {data: post, isPending: isLoadingPost} = useGetPostByIdMutation( id || "")

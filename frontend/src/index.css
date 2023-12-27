@@ -103,6 +103,15 @@ body{
   @apply flex flex-col flex-1 items-center gap-10 overflow-scroll py-10 px-5 md:px-8 lg:p-14 custom-scrollbar;
 }
 
+.regular-link {
+  @apply  flex gap-2 rounded-[8px] bg-slate-700 bg-opacity-60 px-4 py-2 cursor-pointer hover:bg-slate-600;
+}
+
+.active-regular-link {
+  @apply  flex gap-2 rounded-[8px] bg-blue-500 bg-opacity-60 px-4 py-2 cursor-pointer;
+
+}
+
 
 /* Home */
 
@@ -128,4 +137,5 @@ body{
 .grid-container{
   @apply  grid grid-cols-1  lg:grid-cols-2 xl:grid-cols-3 gap-6 w-full
 }
+
 

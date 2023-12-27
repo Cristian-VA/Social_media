@@ -12,6 +12,7 @@ type GridPostListType = {
 const GridPostsLists = ({posts, showStats=true, showUser=true}:GridPostListType) => {
    
     const {user} = useUserContext()
+    console.log(posts)
     
 
   return (
@@ -23,21 +24,28 @@ const GridPostsLists = ({posts, showStats=true, showUser=true}:GridPostListType)
                         <img src={post?.ImageUrl} alt="" 
                         className="rounded-[8px] object-cover w-full h-full"/>
                     </Link>
-                {showUser && (
-                    <div className="absolute bottom-0  rounded-b-[8px] bg-gradient-to-t from-gray-700 to-transparent h-20 w-full">
-                    <div className="flex gap-2 ml-4 mb-4">
+                {showUser? (
+                    <div className=" absolute bottom-0  rounded-b-[8px] bg-gradient-to-t from-gray-700 to-transparent    h-20 w-full">
+                        <Link to ={`/profile/${post?.creator?.$id}`}>
+                    <div className="flex gap-2 ml-4 mb-4 cursor-pointer">
                         <img src={post?.creator?.imageUrl} alt="" 
                         className="w-16 h-16 object-cover rounded-[8px]"/>
                         <p className="my-auto base line-clamp-1">{post?.creator?.username}</p>
                     </div>
+                    </Link>
+                </div>
+                ):(
+                    <div className="absolute bottom-0  rounded-b-[8px] bg-gradient-to-t from-gray-700 to-transparent h-20 w-full">
                 </div>
                 )}
+
+                
 
             
 
                 {showStats && (
                 <div className="w-[90px] absolute bottom-0 right-0 mr-4 mb-4">
-                       <PostStats post={post} userId={user.id} noText/>
+                      <PostStats post={post} userId={user.id} noText /> 
                 </div>
                 )
                 }
