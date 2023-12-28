@@ -29,7 +29,7 @@ const PostCard = ({ post }:postCardType) => {
                 <img 
                 src={post?.creator?.imageUrl}
                 alt="Poster Profile" 
-                className='rounded-[8px] w-[60px] '
+                className='rounded-[8px] w-[60px] md:w-[80px] '
                 />
             </Link>
 

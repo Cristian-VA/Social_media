@@ -1,19 +1,18 @@
 import { useEffect } from 'react'
 import { Link, useNavigate, NavLink, useLocation } from 'react-router-dom'
 import { useSignOutAccountMutation } from '@/lib/react-query/queriesAndMutations';
-
-import { useUserContext } from '@/context/AuthContext';
 import { INavLink } from '@/types';
 import { sidebarLinks } from '@/constants';
 import LogOutModal from '../Reusable/LogOutModal';
-
+import { useGetCurrentUserMutation } from '@/lib/react-query/queriesAndMutations';
 
 
 const LeftSideBar = () => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const { mutate: signOut,  isSuccess, isPending } = useSignOutAccountMutation()
-  const { user, isLoading } = useUserContext()
+  
+  const {data:user, isLoading} =useGetCurrentUserMutation()
 
   
 
@@ -63,10 +62,10 @@ const LeftSideBar = () => {
             <h1 className="h3 font-bold text-center my-auto"> GrooveGram</h1>  
         </Link>
 
-        <Link to={`/profile/${user.id}`}> 
+        <Link to={`/profile/${user?.$id}`}> 
             <div className='flex gap-4'>
               <img 
-              src={user.imageUrl || "/assets/Icons/loading.svg" }
+              src={user?.imageUrl || "/assets/Icons/loading.svg" }
               className='w-[70px] rounded-[8px] my-auto bg-slate-700'
               alt="" />
 

@@ -69,6 +69,8 @@ const FormPost = ({post, action}:IPostFrom) => {
         navigate('/')
       }
 
+      
+
 
   return (
     <>

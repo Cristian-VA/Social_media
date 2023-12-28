@@ -1,13 +1,12 @@
 import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useSignOutAccountMutation } from '@/lib/react-query/queriesAndMutations';
-import LogOutModal from '../Reusable/LogOutModal';
-import { useUserContext } from '@/context/AuthContext';
+import { useSignOutAccountMutation, useGetCurrentUserMutation } from '@/lib/react-query/queriesAndMutations'
+import LogOutModal from '../Reusable/LogOutModal'
 
 const TopBar = () => {
   const navigate = useNavigate()
   const { mutate: signOut,  isSuccess, isPending } = useSignOutAccountMutation()
-  const { user } = useUserContext()
+  const {data:user, isLoading} =useGetCurrentUserMutation()
   useEffect(() => {
     if (isSuccess) {
       navigate(0)
@@ -34,9 +33,9 @@ const TopBar = () => {
                   <img src="/assets/Icons/Logout.svg" className='w-8 h-8 hover:brightness-0 transition hover:invert cursor-pointer my-auto block' alt="logout" onClick={() => signOut()} />
                   
                 
-                  <Link to={`/profile/${user.id}`}> 
+                  <Link to={`/profile/${user?.$id}`}> 
                     <img 
-                    src={user.imageUrl || "/assets/Icons/loading.svg" }
+                    src={user?.imageUrl || "/assets/Icons/loading.svg" }
                     className='w-[40px] rounded-[8px] my-auto bg-slate-600'
                     alt="" />
                   </Link>

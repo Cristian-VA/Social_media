@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { Button } from "@/components/ui/button"
-import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage,
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,
 } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
 import { Input } from "@/components/ui/input"
@@ -14,7 +14,7 @@ import { useUserContext } from '@/context/AuthContext';
 
 import { useToast } from '@/components/ui/use-toast'
 import { useNavigate } from 'react-router-dom'
-import { useCreatePostMutation, useUpdatePostMutation, useDeletePostMutation} from '@/lib/react-query/queriesAndMutations'
+import { useUpdateProfileMutation} from '@/lib/react-query/queriesAndMutations'
 import Loader from '../Loader'
 
 
@@ -27,9 +27,10 @@ const FormProfile = ({profile}:IProfileFrom) => {
   const { user } = useUserContext()
   const { toast } = useToast()
   const navigate = useNavigate()
-  const isLoading = false
+  
+  const {mutateAsync: updateProfile, isPending:IsUpdatingProfile} = useUpdateProfileMutation()
 
-  console.log(profile)
+
  
   
 
@@ -47,18 +48,28 @@ const FormProfile = ({profile}:IProfileFrom) => {
       // 2. Define a submit handler.
       async function onSubmit(values: z.infer<typeof ProfileValidation>) {
         if (profile){
+          const updatedProfile = await updateProfile({ 
+            ...values,
+            profileId: profile.$id,
+            imageId: profile?.imageId,
+            imageUrl: profile?.imageUrl
+          } )
+
+          if (!updatedProfile){
+            toast({title: "Please try again"})
+          }
           
 
           
 
-          return navigate(`/posts/`)
+          return navigate(`/profile/${profile.$id}`)
         }
       }
 
 
   return (
     <>
-    {isLoading ? (
+    {IsUpdatingProfile ? (
         <div className="fixed top-0 flex flex-col justify-center items-center h-screen">
         <Loader
         color= "white"

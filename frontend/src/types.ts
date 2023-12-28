@@ -30,7 +30,6 @@ export type IUser = {
     email: string,
     imageUrl: string,
     bio: string,
-
 }
 
 export type INavLink  = {
@@ -62,6 +61,16 @@ export type IUpdatePost = {
     location?: string,
     tags?: string,
 
+}
+
+export type IUpdateProfile = {
+    profileId: string,
+    name: string,
+    username: string,
+    imageId: string,
+    imageUrl: string,
+    file: File[],
+    bio: string
 }
 
 export type PostTypeProps = {
