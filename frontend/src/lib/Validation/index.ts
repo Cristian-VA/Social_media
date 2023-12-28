@@ -18,3 +18,10 @@ import * as z from "zod"
     location: z.string().min(2).max(100),
     tags: z.string()
   })
+
+  export const  ProfileValidation = z.object({
+    name: z.string().min(2, {message: "Name must be at least 2 characters.",}).max(40),
+    username: z.string().min(2,{message: "Username must be at least 2 characters.",}).max(100),
+    file: z.custom<File[]>(),
+    bio: z.string()
+  })

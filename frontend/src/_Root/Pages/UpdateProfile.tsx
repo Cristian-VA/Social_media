@@ -1,23 +1,23 @@
 
-import FormPost from '@/components/Reusable/Forms/FormPost'
 import { useParams } from 'react-router-dom'
-import { useGetPostByIdMutation } from '@/lib/react-query/queriesAndMutations'
+import { useGetUserByIdMutation } from '@/lib/react-query/queriesAndMutations'
 import Loader from '@/components/Reusable/Loader'
-
+import FormProfile from '@/components/Reusable/Forms/FormProfile'
 
 
 const UpdateProfile = () => {
 const { id } = useParams()
-const {data: post, isPending: isLoadingPost} = useGetPostByIdMutation( id || "")
+const { data: userDetails, isPending: isLoadingUserDetails } =
+    useGetUserByIdMutation(id || "");
 
 
-  
+  console.log(userDetails)
   return (
     <>
       <div className='flex flex-1'>
         <div className='container'>
           
-          {isLoadingPost? (
+          {isLoadingUserDetails? (
              <div className="fixed top-0 flex-col justify-center flex items-center h-screen">
              <Loader
              color= "white"
@@ -38,7 +38,7 @@ const {data: post, isPending: isLoadingPost} = useGetPostByIdMutation( id || "")
                 />
               <h1 className='base md:text-[24px] my-auto'> Edit Profile</h1>
           </div>
-        <FormPost action = "Update" post={post}/>
+           <FormProfile profile={userDetails}/>
         </>
         ) }
         </div>

@@ -29,7 +29,6 @@ const FormPost = ({post, action}:IPostFrom) => {
   const {mutateAsync: createPost, isPending:IsLoadingPost} = useCreatePostMutation()
   const {mutateAsync: updatePost, isPending:IsUpdatingPost} = useUpdatePostMutation()
   const {mutateAsync: deletePost, isPending:IsDeletingPost} = useDeletePostMutation()
-  console.log(post)
 
     const form = useForm<z.infer<typeof PostValidation>>({
         resolver: zodResolver(PostValidation),
