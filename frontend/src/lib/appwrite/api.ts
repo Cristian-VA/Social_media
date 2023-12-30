@@ -460,3 +460,20 @@ export async function getPostByUserID(userId: string) {
     console.log(error);
   }
 }
+
+export async function getSavedPosts() {
+
+  try {
+    const savedPosts = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.savesCollectionId,
+      
+    );
+
+    return savedPosts
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+

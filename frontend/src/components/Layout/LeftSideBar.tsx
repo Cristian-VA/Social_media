@@ -72,8 +72,8 @@ const LeftSideBar = () => {
               <div>
                 {isLoading? <h1 className='my-5 base '>Loading info...</h1>: (
                   <>
-                  <h1 className='h3 capitalize font-semibold'>{user.name}</h1>
-                  <h2 className='base text-slate-500'> @{user.username}</h2>
+                  <h1 className='h3 capitalize font-semibold'>{user?.name}</h1>
+                  <h2 className='base text-slate-500'> @{user?.username}</h2>
                   </>
                   )}
               </div>

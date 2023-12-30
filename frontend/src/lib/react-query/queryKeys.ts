@@ -8,5 +8,6 @@ export enum QUERY_KEYS{
     GET_INFINITE_USERS= "users",
     GET_USER_BY_ID = "getuserbyid",
     GET_POST_BY_USER_ID = "getpostbyuserid",
-    GET_LIKED_POSTS = "getlikedposts"
+    GET_LIKED_POSTS = "getlikedposts",
+    GET_INFINITE_SAVES ="getinifinitesaves"
 }

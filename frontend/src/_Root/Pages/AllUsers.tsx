@@ -16,10 +16,10 @@ const AllUsers = () => {
   
   
 
-  const mapUsers= users?.pages?.map( (user) => {
+  const mapUsers= users?.pages?.map( (user, index) => {
    
     return (
-      <UserCardGrid users={user?.documents}/>
+      <UserCardGrid users={user?.documents} key={index}/>
     )
   })
 
