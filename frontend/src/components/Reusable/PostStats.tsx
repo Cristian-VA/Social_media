@@ -12,43 +12,43 @@ import { checkIsLiked } from "@/lib/utils";
 import { ModalLikes } from "./ModalLikes";
 
 const PostStats = ({ post, userId, noText }: PostTypeProps) => {
-  const likesList = post?.likes.map(
-    (currentUser: Models.Document) => currentUser.$id
+  const likesList = post?.likes?.map(
+    (currentUser: Models.Document) => currentUser?.$id
   );
-  const likesInfo = post?.likes.map(
+  const likesInfo = post?.likes?.map(
     (currentUser: Models.Document) => currentUser
   );
 
   const [likes, setLikes] = useState(likesList);
   const [isSaved, setIsSaved] = useState(false);
-  const lastLike = likes.length - 1;
+  const lastLike = likes?.length - 1;
   const { mutate: likePost } = useLikePostMutation();
   const { mutate: savePost, isPending: isLoadingSave } = usesSavedPostMutation();
   const { mutate: deletePost, isPending: isLoadingDelete } = useDeleteSavedPostMutation();
 
-  const { data: currentUser } = useGetCurrentUserMutation(); //need to use queries for refetching so we use the mutation and not the context
+  const { data: currentUser } = useGetCurrentUserMutation();
 
   const userWhoLike =
-    likesInfo[lastLike]?.username === currentUser?.username
+    likesInfo?.[lastLike]?.username === currentUser?.username
       ? "You"
-      : likesInfo[lastLike]?.username;
+      : likesInfo?.[lastLike]?.username;
   const likeDisplayMessage =
     lastLike === 1
-      ? `${userWhoLike} and ${likesInfo[0]?.username} liked this`
+      ? `${userWhoLike} and ${likesInfo?.[0]?.username} liked this`
       : lastLike > 1
       ? `${userWhoLike} and ${lastLike} others liked this`
       : `${userWhoLike} liked this`;
 
-  const savedPost = currentUser?.save.find(
-    (record: Models.Document) => record.post.$id === post?.$id
+  const savedPost = currentUser?.save?.find(
+    (record: Models.Document) => record.post?.$id === post?.$id
   );
 
   useEffect(() => {
-    setIsSaved(savedPost ? true : false);
+    setIsSaved(!!savedPost);
   }, [currentUser]);
 
   const handleLikePost = (e: React.MouseEvent) => {
-    e.stopPropagation(); //will only like the post, it will stop it from navigating to post details.
+    e.stopPropagation();
 
     let newLikes = [...likes];
     const hasLiked = newLikes.includes(currentUser?.$id);
@@ -60,7 +60,7 @@ const PostStats = ({ post, userId, noText }: PostTypeProps) => {
     }
 
     setLikes(newLikes);
-    likePost({ postId: post?.$id || "", likesArray: newLikes });
+    likePost({ postId: post?.$id ?? "", likesArray: newLikes });
   };
 
   const handleSavePost = (
@@ -73,7 +73,7 @@ const PostStats = ({ post, userId, noText }: PostTypeProps) => {
       return deletePost({ savedPostId: savedPost?.$id });
     }
 
-    savePost({ userId: userId, postId: post?.$id || ""});
+    savePost({ userId: userId, postId: post?.$id ?? ""});
     setIsSaved(true);
   };
 
@@ -90,14 +90,14 @@ const PostStats = ({ post, userId, noText }: PostTypeProps) => {
           className="w-6 h-6  md:h-7 md:w-7 cursor-pointer my-auto"
           onClick={handleLikePost}
         />
-        <p className=" lg:text-[18px] text-[14px] my-auto">{likes.length}</p>
+        <p className=" lg:text-[18px] text-[14px] my-auto">{likes?.length}</p>
         {!noText && (
         <div>
           <ModalLikes
             btnText={
-              likesInfo[lastLike]?.username
+              likesInfo?.[lastLike]?.username
                 ? likeDisplayMessage
-                : likes.length === 0
+                : likes?.length === 0
                 ? "Be the first to like"
                 : "Liking post..."
             }
@@ -126,6 +126,5 @@ const PostStats = ({ post, userId, noText }: PostTypeProps) => {
 };
 
 export default PostStats;
-//4:16:18
 
-//{likesInfo[lastLike]?.name} and {lastLike}
+

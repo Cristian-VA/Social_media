@@ -25,5 +25,5 @@ export function calculateDaysDifference(dateString:any) {
 }
 
 export const checkIsLiked = (likeList:string[], userId:string) => {
-  return likeList.includes(userId)
+  return likeList?.includes(userId)
 }
