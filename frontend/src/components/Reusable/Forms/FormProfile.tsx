@@ -76,7 +76,7 @@ const FormProfile = ({profile}:IProfileFrom) => {
         shape= "spiner"
         width= "w-[90px] my-auto"
         />
-         <p>Updating Post...</p>
+         <p>Updating profile...</p>
         </div>
     ) :(
     <Form {...form}>

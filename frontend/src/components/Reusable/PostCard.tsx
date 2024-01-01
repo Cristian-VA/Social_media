@@ -3,12 +3,18 @@ import { calculateDaysDifference } from '@/lib/utils'
 import { Link } from 'react-router-dom'
 import { useUserContext } from '@/context/AuthContext'
 import PostStats from './PostStats'
+import CommentBox from './CommentBox'
+import { useState } from 'react'
+import CommentsBox from './CommetsBox'
 
 type postCardType = {
   post?:Models.Document
 }
 
 const PostCard = ({ post }:postCardType) => {
+
+    
+      const [toggle, setToggle] = useState(false)
     
     const { user } = useUserContext()
     console.log(post)
@@ -28,7 +34,7 @@ const PostCard = ({ post }:postCardType) => {
     <>
     {post?.creator? (
 
-<div className='bg-dark rounded-[8px] border-2 border-slate-700 p-5 lg:p-7 w-full  '>
+<div className='bg-dark rounded-[8px] border-2 border-slate-700 px-5 pt-5 pb-0  lg:py-7  lg:pt-7 w-full  '>
 <div className='flex gap-4  items-center '>
     <Link to={`/profile/${post?.creator?.$id}`}>
         <img 
@@ -76,14 +82,24 @@ const PostCard = ({ post }:postCardType) => {
 </Link>
 
 <PostStats post= {post} userId= {user.id}/>
-{post?.comments[lastCommentIndex]? (
-  <div className='w-full flex '>
+{post?.comments[lastCommentIndex] ? (
+  <div>
+          <hr className="border-2 border-slate-600 opacity-20  w-full mb-4 mt-2" />
+          <CommentBox info={post?.comments[lastCommentIndex]}/>
+          {post?.comments?.length - 1 > 0? (
 
+            <CommentsBox msg={`View all (${post?.comments?.length}) comments`} info={post?.comments}/>
+            
+          ) : ""}
+  
+  
+  
   </div>
+  
 ) : ""}
 </div>
 
-    ) : "hello"}
+    ) : "helo"}
    
 
    
