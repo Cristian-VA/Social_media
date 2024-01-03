@@ -12,7 +12,7 @@ type postCardType = {
 }
 
 const PostCard = ({ post }:postCardType) => {
-
+      
     
       const [toggle, setToggle] = useState(false)
     
@@ -82,21 +82,19 @@ const PostCard = ({ post }:postCardType) => {
 </Link>
 
 <PostStats post= {post} userId= {user.id}/>
-{post?.comments[lastCommentIndex] ? (
-  <div>
-          <hr className="border-2 border-slate-600 opacity-20  w-full mb-4 mt-2" />
-          <CommentBox info={post?.comments[lastCommentIndex]}/>
-          {post?.comments?.length - 1 > 0? (
 
-            <CommentsBox msg={`View all (${post?.comments?.length}) comments`} info={post?.comments}/>
+  <div>
+          <hr className="border-2 border-slate-600 opacity-20  w-full  mt-2" />
+          {post?.comments?.length > 0? (
+
+            <CommentsBox msg={`View all (${post?.comments?.length}) comments`} info={post?.comments} postId={post?.$id}/>
             
-          ) : ""}
+          ) :<CommentsBox msg={`Be the first to leave a comment`} info={post?.comments} postId={post?.$id}/>}
   
   
   
   </div>
   
-) : ""}
 </div>
 
     ) : "helo"}

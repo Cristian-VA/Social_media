@@ -1,8 +1,8 @@
 import { Query } from 'appwrite';
-import { INewPost, IUpdatePost } from './../../types';
+import { INewPost, IUpdatePost, INewComment } from './../../types';
 import { INewUser, IUpdateProfile } from "@/types"
 import {useQuery, useMutation, useQueryClient, useInfiniteQuery} from "@tanstack/react-query"
-import { createUserAccount, signInAccount, signOutAccount, createPost, getRecentPosts, likePost, savePost, deleteSavedPost, getCurrentUser, getPostDetailsId, updatePostByID, deletePost, getInfinitePosts, searchPost, getUserId, getPostByUserID, updateProfileById, getSavedPosts } from "../appwrite/api"
+import { createUserAccount, signInAccount, signOutAccount, createPost, getRecentPosts, likePost, savePost, deleteSavedPost, getCurrentUser, getPostDetailsId, updatePostByID, deletePost, getInfinitePosts, searchPost, getUserId, getPostByUserID, updateProfileById, getSavedPosts, createComment } from "../appwrite/api"
 import { QUERY_KEYS } from './queryKeys';
 import { getAllUsers } from '../appwrite/api';
 
@@ -33,6 +33,19 @@ export const useCreatePostMutation = () => {
 
     return useMutation({
         mutationFn: (post:INewPost) => createPost(post),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: [QUERY_KEYS.GET_RECENT_POSTS]
+            })
+        }
+    })
+}
+
+export const useCreateCommentMutation = () => {
+    const queryClient = useQueryClient()
+
+    return useMutation({
+        mutationFn: (comment:INewComment) => createComment(comment),
         onSuccess: () => {
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEYS.GET_RECENT_POSTS]

@@ -1,5 +1,5 @@
 import { ID, Query } from "appwrite"; //CREATES A RANDOM ID FOR EACH NEW USER
-import { INewPost, INewUser, IUpdatePost, IUpdateProfile } from "@/types";
+import { INewComment, INewPost, INewUser, IUpdatePost, IUpdateProfile } from "@/types";
 import { account, appwriteConfig, avatars, databases, storage } from "./config";
 
 export async function createUserAccount(user: INewUser) {
@@ -476,4 +476,27 @@ export async function getSavedPosts() {
   }
 }
 
+export async function createComment(comment: INewComment) {
+  try {
+    
 
+    const newComment = await databases.createDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.commentsCollectionId,
+      ID.unique(),
+      {
+        creator: comment.userId,
+        post: comment.postId,
+        message: comment.message
+      }
+    );
+
+    if (!newComment) {
+      throw Error;
+    }
+
+    return newComment;
+  } catch (error) {
+    console.log(error);
+  }
+}

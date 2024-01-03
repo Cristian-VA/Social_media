@@ -79,3 +79,9 @@ export type PostTypeProps = {
     noText?: boolean,
 
 }
+
+export type INewComment = {
+    userId: string,
+    postId: string,
+    message: string
+}
