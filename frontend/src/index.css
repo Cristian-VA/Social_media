@@ -129,7 +129,7 @@ body{
   @apply w-full bg-dark max-w-5xl border-2 border-slate-600 rounded-[8px] flex flex-col xl:flex-row
 }
 .post_details-img {
-  @apply h-80 lg:h-[480px] xl:w-[48%] rounded-t-[24px] xl:rounded-l-[24px] xl:rounded-tr-none object-cover p-5 bg-dark;
+  @apply h-80 lg:h-[480px] xl:w-[48%] rounded-t-[24px] xl:rounded-l-[24px] xl:rounded-tr-none object-cover py-3 px-5 bg-dark;
 }
 
 /* Explore Page */

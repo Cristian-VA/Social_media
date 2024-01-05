@@ -10,13 +10,17 @@ const CommentBox = ({ info, postId }: any) => {
   const {user} = useUserContext()
 
   const [isEditing, setIsEditing] = useState(false)
+
+  const toggleEditing = () => {
+    setIsEditing((prevIsEditing) => !prevIsEditing);
+  };
   
   
    
   const formatDate = calculateDaysDifference(info?.$createdAt);
   return (
     <>
-    <div className=" w-full  flex gap-2 rounded-[8px] pr-2 ">
+    <div className=" w-full  flex gap-2 rounded-[8px]  bg-slate-600 bg-opacity-20 p-2">
       <img
         src={info?.creator?.imageUrl}
         className="w-[50px] h-[50px] object-cover rounded-[8px]"
@@ -24,10 +28,10 @@ const CommentBox = ({ info, postId }: any) => {
       />
 
       {isEditing? (
-        <CommentForm postId={postId} info={info}/>
+        <CommentForm postId={postId} info={info} isEditing={isEditing} toggleEditing={toggleEditing}/>
       ) :(
 
-      <div className="flex flex-col my-auto w-full">
+      <div className="flex flex-col my-auto w-full ">
         <div className="flex justify-between gap-2 text-[12px] md:text-[16px]">
           <div className="flex">
           <h1 className="flex-wrap">
@@ -38,7 +42,7 @@ const CommentBox = ({ info, postId }: any) => {
           </h1>
           </div>
           {info?.creator?.$id === user.id && (
-             <p onClick={() => setIsEditing(!isEditing)} className="py-1 px-2 text-[12px] cursor-pointer bg-slate-700 transition hover:bg-blue-500 bg-opacity-50 rounded-[8px]">Edit</p>
+             <p onClick={toggleEditing} className="py-1 px-2 text-[12px] cursor-pointer bg-blue-500  transition hover:bg-blue-500 bg-opacity-50 rounded-[8px]">Edit</p>
           )}
          
         </div>

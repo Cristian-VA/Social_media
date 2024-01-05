@@ -1,4 +1,4 @@
-import React from 'react'
+import {useState} from 'react'
 import * as z from "zod"
 import { CommentValidation } from '@/lib/Validation'
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -13,42 +13,80 @@ import {
   FormMessage
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useCreateCommentMutation } from '@/lib/react-query/queriesAndMutations'
+import { useCreateCommentMutation, useDeleteComment, useUpdateComment } from '@/lib/react-query/queriesAndMutations'
 import { useUserContext } from '@/context/AuthContext'
-import { Models } from 'appwrite'
 
 
-const CommentForm = ({postId, info}:{postId:string, info?:any}) => {
-  const {mutateAsync: createComment, isPending:IsLoadingComments} = useCreateCommentMutation()
+
+const CommentForm = ({postId, info, isEditing, toggleEditing}:{postId:string, info?:any, isEditing: boolean, toggleEditing?:any}) => {
+  const {mutateAsync: createComment, isPending:IsCreatingComment} = useCreateCommentMutation()
+  const {mutateAsync: deleteComment, isPending:IsDeleting, isSuccess: commentDeleted} = useDeleteComment()
+  const {mutateAsync: updateComment, isPending:IsUpdating, } = useUpdateComment()
+
   const { user } = useUserContext()
-    console.log(info)
- 
+  const [isClicked, setIsClicked] = useState(false)
 
+    
+ 
 
   const form = useForm<z.infer<typeof CommentValidation>>({
     resolver: zodResolver(CommentValidation),
     defaultValues: {
-      message: "" || info?.message,
+      message: info? info?.message : "",
     },
   })
 
   async function onSubmit(values: z.infer<typeof CommentValidation>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    const newComment = await createComment({
-      ...values,
-     userId: user.id,
-     postId: postId
-   })
+    if (!isEditing) {
+      const newComment = await createComment({
+        ...values,
+       userId: user.id,
+       postId: postId
+     })
 
-   if (newComment) throw Error
+     if (newComment) throw Error
+
+    } else {
+     
+      console.log(isEditing)
+      const updatedComment = await updateComment({
+        ...values,
+        commentId: info?.$id
+      })
+      toggleEditing()
+      console.log(isEditing)
+      
+      
+
+      if (!updatedComment) throw Error
+
+    }
+    
+
+   
+  }
+
+
+  async function deleteCommentHandler(){
+      await deleteComment(info.$id)
+      setIsClicked(true)
   }
 
   return (
+    <>
+    {commentDeleted ? (
+      <div className='w-full flex justify-between'>
+      <h1 className="text-slate-500 text-[16px] my-auto"> Comment Deleted, waiting on server...</h1>
+      <img src="/assets/Icons/checkGreen.svg" alt="delete comment" className='w-8 h-8 my-auto' />
+      </div>
+    ) :(
+    
     <Form {...form}>
     <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex gap-2 ">
       <FormField
-        control={form.control}
+        control={form.control}  
         name="message"
         render={({ field }) => (
           <FormItem className='w-full my-auto'>
@@ -60,18 +98,31 @@ const CommentForm = ({postId, info}:{postId:string, info?:any}) => {
           </FormItem>
         )}
       />
-      {IsLoadingComments? (
-        <div className='rounded-[8px] bg-blue-400  my-auto h-10 w-17 flex items-center justify-center'>
-          <img src="/assets/LoadingWhite.svg" className='  w-8 h-8 '/>
+      {IsCreatingComment || IsDeleting || IsUpdating? (
+        <div className='rounded-[8px] bg-slate-500  my-auto h-10 w-[70px] flex items-center justify-center'>
+         <img src="/assets/LoadingWhite.svg" alt="delete comment" className='w-8 h-8' />
 
         </div>
       ) :(
-      <Button type="submit" className=' bg-blue-500 transition  hover:bg-blue-400  my-auto rounded-[8px]  w-17 '>
+        <>
+         
+      
+      <Button type="submit"  className=' bg-blue-500 transition  hover:bg-blue-400  my-auto rounded-[8px]  w-17 '>
         <img src="/assets/Icons/Send.svg" alt="post comment" className='w-8 h-8' />
       </Button>
+      </>
       )}
     </form>
+
+    {isEditing && !IsUpdating  && (
+      <Button disabled={isClicked} onClick={deleteCommentHandler} className=' bg-rose-500 transition  hover:bg-rose-400  my-auto rounded-[8px]  w-17 ' >
+                <img src="/assets/Icons/trashWhite.svg" alt="delete comment" className='w-8 h-8' />
+
+      </Button>)}
+   
   </Form>
+  )}
+  </>
   )
 }
 

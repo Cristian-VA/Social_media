@@ -6,9 +6,9 @@ import { calculateDaysDifference } from '@/lib/utils'
 import { useUserContext } from '@/context/AuthContext'
 import PostStats from '@/components/Reusable/PostStats'
 import { useDeletePostMutation } from '@/lib/react-query/queriesAndMutations'
-
-
-
+import CommentsBox from '@/components/Reusable/CommetsBox'
+import CommentBox from '@/components/Reusable/CommentBox'
+import CommentUser from '@/components/Reusable/CommentUser'
 const PostsDetails = () => {
   const {id} = useParams()
   const {data:post, isPending: isPostLoading} = useGetPostByIdMutation(id || "")
@@ -16,10 +16,14 @@ const PostsDetails = () => {
   const daysPosted= calculateDaysDifference(post?.$createdAt)
   const TagsMap = post?.tags.map((tag:string) => {
     return (
-      <li key={tag} className='capitalize bg-slate-700 py-1 px-2 rounded-[8px] max-w-full  '>#{tag}</li>
+      <li key={tag} className='capitalize bg-slate-600 bg-opacity-20 py-1 px-2 rounded-[8px] max-w-full  '>#{tag}</li>
     )
   })
+  const mapComments = post?.comments?.map((comment: any, index: number) => {
+    return <CommentBox info={comment} key={index} postId={post.$id} />;
+  });
 
+  
   
 
   return (
@@ -41,8 +45,8 @@ const PostsDetails = () => {
                 alt="" 
                 className='post_details-img '
               />
-             <div className=' flex flex-col w-full'>
-              <div className='flex gap-5 lg:gap-7 items-start p-5 w-full '>
+             <div className=' flex flex-col w-full max-h-[480px] overflow-scroll custom-scrollbar'>
+              <div className='flex gap-5 lg:gap-7 items-start py-3 px-5 w-full '>
                   <Link to={`/profile/${post?.creator.$id}`}>
                       <img 
                       src={post?.creator?.imageUrl}
@@ -73,7 +77,7 @@ const PostsDetails = () => {
                           <img src="/assets/Icons/Edit.svg" alt="Edit post" className='w-[20px] h-[20px] md:w-[30px] md:h:-[30px] my-auto cursor-pointer hover:brightness-0 transition hover:invert' />
                       </Link>
 
-                      <img onClick={handleDelete} src="/assets/Icons/trash.svg" alt="Delete post" className='w-[20px] h-[20px] md:w-[30px] md:h:-[30px]  my-auto cursor-pointer hover:brightness-0 transition hover:invert' />
+                      <img onClick={() => {}} src="/assets/Icons/trash.svg" alt="Delete post" className='w-[20px] h-[20px] md:w-[30px] md:h:-[30px]  my-auto cursor-pointer hover:brightness-0 transition hover:invert' />
                       </>
                       ) : ""}   
                     </div>
@@ -81,14 +85,25 @@ const PostsDetails = () => {
                 </div>
              
                 <div className='flex flex-col px-5'>
-                   <hr  className='border-2 border-slate-600 opacity-20'/>
-                      <div className='tiny lg:text-[16px] py-5'>
+                   <hr  className=' border-slate-600 opacity-20'/>
+                      <div className='tiny lg:text-[16px] py-3'>
                         <p>{post?.caption}</p>
                             <ul className='flex gap-2 mt-3 max-w-full flex-wrap f'>
                               {TagsMap}
                             </ul>
                       </div>
                       <PostStats post={post} userId={user.id}/>
+                      <div className=' flex-col justify-between h-full hidden md:flex    '>
+                        <div className='flex flex-col overflow-scroll h-full  gap-2 custom-scrollbar'>
+                      {mapComments}
+                      </div>
+                      <CommentUser postId={post?.$id || ""}/>
+                      </div>
+                      
+                      
+                      
+                      
+                     
                 </div>
                 
         

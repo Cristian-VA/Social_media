@@ -23,7 +23,7 @@ const CommentsBox = ({msg, info, postId}:{msg:string, info?:any, postId:string})
       <AccordionItem value="item-1 border-red-400">
         <AccordionTrigger className="mb-0 text-[14px] text-slate-100 cursor-pointer hover:text-blue-400 hover:text-opacity-80 transition text-center">{msg}</AccordionTrigger>
         <AccordionContent>
-        <div className="flex flex-col gap-4 custom-scrollbar overflow-scroll max-h-[250px] ">
+        <div className="flex flex-col gap-4 custom-scrollbar overflow-scroll max-h-[250px] pr-1 ">
          {mapComments}
         </div>
         <CommentUser postId={postId} info={info.comments}/>

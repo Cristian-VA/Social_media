@@ -77,11 +77,17 @@ export type PostTypeProps = {
     post?: Models.Document,
     userId: string,
     noText?: boolean,
+   
 
 }
 
 export type INewComment = {
     userId: string,
     postId: string,
+    message: string
+}
+
+export type IUpdateComment = {
+    commentId: string,
     message: string
 }

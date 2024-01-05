@@ -1,3 +1,4 @@
+import { IUpdateComment } from './../../types';
 import { ID, Query } from "appwrite"; //CREATES A RANDOM ID FOR EACH NEW USER
 import { INewComment, INewPost, INewUser, IUpdatePost, IUpdateProfile } from "@/types";
 import { account, appwriteConfig, avatars, databases, storage } from "./config";
@@ -499,4 +500,44 @@ export async function createComment(comment: INewComment) {
   } catch (error) {
     console.log(error);
   }
+}
+
+export async function deleteComment(commentId:string){
+
+  try {
+
+    const deleteComment = await databases.deleteDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.commentsCollectionId,
+      commentId
+    )
+    if (!deleteComment) throw Error;
+    return deleteComment
+    
+    
+  } catch (error) {
+    console.log(error)
+  }
+
+}
+
+export async function updateComment({commentId, message}:IUpdateComment){
+
+  try {
+
+    const updateComment = await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.commentsCollectionId,
+      commentId,
+      {
+        message: message,
+      }
+    )
+
+    return updateComment
+    
+  } catch (error) {
+    console.log(error)
+  }
+
 }

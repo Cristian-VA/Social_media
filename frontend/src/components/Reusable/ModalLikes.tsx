@@ -12,7 +12,7 @@ export function ModalLikes({ btnText, PeopleWhoLiked }: any) {
   const LikesMap = PeopleWhoLiked?.map((like: any) => {
     return (
       <div
-        className="w-full bg-slate-700 px-4 py-4 rounded-[8px] flex justify-between"
+        className="w-full bg-slate-600 bg-opacity-20 px-4 py-4 rounded-[8px] flex justify-between"
         key={like?.username}
       >
         <div className="flex gap-2">
@@ -39,7 +39,7 @@ export function ModalLikes({ btnText, PeopleWhoLiked }: any) {
       <DialogTrigger asChild>
         <Button
           variant="ghost"
-          className="text-slate-500 text-[10px] sm:text-[12px] md:text-[14px] leading-4 my-auto px-0 hover:underline transition"
+          className="text-slate-500 text-[14px] leading-4 my-auto px-0 hover:underline transition"
         >
           {btnText}
         </Button>

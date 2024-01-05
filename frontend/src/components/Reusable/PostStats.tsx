@@ -10,6 +10,7 @@ import Loader from "./Loader";
 import { Models } from "appwrite";
 import { checkIsLiked } from "@/lib/utils";
 import { ModalLikes } from "./ModalLikes";
+import CommentsMobile from "./CommentsMobile";
 
 const PostStats = ({ post, userId, noText }: PostTypeProps) => {
   const likesList = post?.likes?.map(
@@ -18,13 +19,16 @@ const PostStats = ({ post, userId, noText }: PostTypeProps) => {
   const likesInfo = post?.likes?.map(
     (currentUser: Models.Document) => currentUser
   );
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   const [likes, setLikes] = useState(likesList);
   const [isSaved, setIsSaved] = useState(false);
   const lastLike = likes?.length - 1;
   const { mutate: likePost } = useLikePostMutation();
-  const { mutate: savePost, isPending: isLoadingSave } = usesSavedPostMutation();
-  const { mutate: deletePost, isPending: isLoadingDelete } = useDeleteSavedPostMutation();
+  const { mutate: savePost, isPending: isLoadingSave } =
+    usesSavedPostMutation();
+  const { mutate: deletePost, isPending: isLoadingDelete } =
+    useDeleteSavedPostMutation();
 
   const { data: currentUser } = useGetCurrentUserMutation();
 
@@ -42,6 +46,19 @@ const PostStats = ({ post, userId, noText }: PostTypeProps) => {
   const savedPost = currentUser?.save?.find(
     (record: Models.Document) => record.post?.$id === post?.$id
   );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     setIsSaved(!!savedPost);
@@ -73,26 +90,44 @@ const PostStats = ({ post, userId, noText }: PostTypeProps) => {
       return deletePost({ savedPostId: savedPost?.$id });
     }
 
-    savePost({ userId: userId, postId: post?.$id ?? ""});
+    savePost({ userId: userId, postId: post?.$id ?? "" });
     setIsSaved(true);
   };
 
   return (
     <div className="flex justify-between items-center ">
-      <div className="flex gap-2 mr-5">
-        <img
-          src={
-            checkIsLiked(likes, userId)
-              ? "/assets/Icons/HeartFilled.svg"
-              : "/assets/Icons/Heart.svg"
-          }
-          alt="like"
-          className="w-6 h-6  md:h-7 md:w-7 cursor-pointer my-auto"
-          onClick={handleLikePost}
-        />
-        <p className=" lg:text-[18px] text-[14px] my-auto">{likes?.length}</p>
-        {!noText && (
-        <div>
+      <div className="flex gap-3 md:gap-2">
+        {isMobile && (
+          <div className="flex ">
+            <CommentsMobile info={post?.comments}
+                postId={post?.$id} />
+            <p className="text-slate-500  text-[14px] leading-4 my-auto px-0 ">
+              {post?.comments?.length}
+            </p>
+          </div>
+        )}
+        <div className="flex  gap-1">
+          <img
+            src={
+              checkIsLiked(likes, userId)
+                ? "/assets/Icons/HeartFilled.svg"
+                : "/assets/Icons/Heart.svg"
+            }
+            alt="like"
+            className="w-6 h-6  md:h-7 md:w-7 cursor-pointer my-auto"
+            onClick={handleLikePost}
+          />
+         { isMobile && <ModalLikes btnText={likesInfo?.length} PeopleWhoLiked={likesInfo} />}
+        
+          
+        </div>
+        {!isMobile && (
+            <p className=" lg:text-[18px] text-[14px] my-auto">
+              {likes?.length}
+            </p>
+          )}
+
+        {!noText && !isMobile && (
           <ModalLikes
             btnText={
               likesInfo?.[lastLike]?.username
@@ -103,8 +138,7 @@ const PostStats = ({ post, userId, noText }: PostTypeProps) => {
             }
             PeopleWhoLiked={likesInfo}
           />
-        </div>
-        )}
+        ) }
       </div>
 
       {isLoadingSave || isLoadingDelete ? (
@@ -126,5 +160,3 @@ const PostStats = ({ post, userId, noText }: PostTypeProps) => {
 };
 
 export default PostStats;
-
-
