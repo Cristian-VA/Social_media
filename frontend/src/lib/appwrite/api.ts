@@ -158,7 +158,9 @@ export function getFilePreview(fileId: string) {
       100
     );
     return fileUrl;
-  } catch (error) {}
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export async function deleteFile(fileId: string) {
@@ -166,7 +168,9 @@ export async function deleteFile(fileId: string) {
     await storage.deleteFile(appwriteConfig.storageId, fileId);
 
     return { status: "deleted" };
-  } catch (error) {}
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export async function getRecentPosts() {
@@ -212,6 +216,7 @@ export async function savePost(postId: string, userId: string) {
     return updatedPost;
   } catch (error) {}
 }
+
 
 export async function deleteSavedPost(savedPostId: string) {
   try {
@@ -362,17 +367,26 @@ export async function updateProfileById(profile: IUpdateProfile) {
   }
 }
 
-export async function deletePost(postId: string, imageId: string) {
-  if (postId || imageId) throw Error;
+
+
+export async function deletePost(postId?: string, imageId?: string) {
+  if (!postId || !imageId) return
 
   try {
-    await databases.deleteDocument(
+    const statusCode = await databases.deleteDocument(
       appwriteConfig.databaseId,
       appwriteConfig.postCollectionId,
       postId
-    );
-    return { status: "ok" };
-  } catch (error) {}
+    )
+
+    if (!statusCode) throw Error
+
+    await deleteFile(imageId)
+
+    return { status: "Ok" }
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export async function searchPost(searchString: string) {

@@ -94,7 +94,7 @@ const CommentForm = ({postId, info, isEditing, toggleEditing}:{postId:string, in
               <Input placeholder='Write your comment..'  className="text-slate-800 my-auto w-full  relative  bg-blue-50 border-none rounded-[8px] placeholder:text-slate-500 focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-slate-100 " {...field} />
             </FormControl>
          
-            <FormMessage className='text-rose-500 text-[12px] block w-full border-2' />
+            <FormMessage className='text-rose-500 text-[12px] block w-full ' />
           </FormItem>
         )}
       />

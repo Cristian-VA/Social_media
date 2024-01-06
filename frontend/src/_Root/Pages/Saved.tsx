@@ -1,14 +1,13 @@
-import React from 'react'
+
 import { useGetCurrentUserMutation } from '@/lib/react-query/queriesAndMutations'
-import { useGetSavedPosts } from '@/lib/react-query/queriesAndMutations'
 import GridPostsLists from '@/components/Reusable/GridPostsLists'
 
 const Saved = () => {
   const {data: user} = useGetCurrentUserMutation()
-  console.log(user)
+  
 
   const savedPostArray = user?.save?.map((item:any) => item.post)
-  console.log(savedPostArray)
+ 
   
   return (
   <div className='container'>
