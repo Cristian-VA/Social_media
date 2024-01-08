@@ -25,7 +25,7 @@ const FileUploader = ({ fieldChange, mediaUrl}:IFileUploader) => {
           <input {...getInputProps()} />
           {
             fileUrl ? (
-                <div className=' rounded-[8px] bg-blue-100 p-4 flex flex-col items-center justify-center gap-3'>
+                <div className=' rounded-[8px] bg-blue-100 p-4 flex flex-col items-center justify-center gap-3 cursor-pointer'>
                     <img 
                     src={fileUrl}
                     alt="" 

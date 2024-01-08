@@ -15,7 +15,7 @@ const PostCard = ({ post }: postCardType) => {
   const [toggle, setToggle] = useState(false);
 
   const { user } = useUserContext();
-  console.log(post);
+  console.log(post?.tags);
 
   const daysPosted = calculateDaysDifference(post?.$createdAt);
 
@@ -78,15 +78,17 @@ const PostCard = ({ post }: postCardType) => {
             <div className="tiny lg:text-[16px] py-5">
               <p>{post?.caption}</p>
               <ul className="flex gap-2 mt-3 max-w-full flex-wrap f">
-                {TagsMap}
+                
+                {post?.tags?.length > 1 && TagsMap}
               </ul>
             </div>
-
             <img
               src={post?.ImageUrl}
               alt=""
               className=" rounded-[8px] h-[300px] md:h-[400px] lg:h-[500px] w-full  object-cover mb-5"
+              loading="lazy"
             />
+           
           </Link>
 
           <PostStats post={post} userId={user.id} />

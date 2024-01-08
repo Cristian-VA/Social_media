@@ -37,6 +37,9 @@ export const useCreatePostMutation = () => {
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEYS.GET_RECENT_POSTS]
             })
+            queryClient.invalidateQueries({
+                queryKey:[QUERY_KEYS.GET_INFINITE_POSTS]
+            })
         }
     })
 }
@@ -52,6 +55,9 @@ export const useCreateCommentMutation = () => {
             })
             queryClient.invalidateQueries({
                 queryKey:[QUERY_KEYS.GET_POST_BY_ID]
+            })
+            queryClient.invalidateQueries({
+                queryKey:[QUERY_KEYS.GET_INFINITE_POSTS]
             })
         }
     })
@@ -86,6 +92,11 @@ export const useLikePostMutation = () => {
             queryClient.invalidateQueries({
                 queryKey:[QUERY_KEYS.GET_CURRENT_USER]
             })
+
+            queryClient.invalidateQueries({
+                queryKey:[QUERY_KEYS.GET_INFINITE_POSTS]
+            })
+            
         }
     })
 }
@@ -107,6 +118,9 @@ export const usesSavedPostMutation = () => {
 
             queryClient.invalidateQueries({
                 queryKey:[QUERY_KEYS.GET_CURRENT_USER]
+            })
+            queryClient.invalidateQueries({
+                queryKey:[QUERY_KEYS.GET_INFINITE_POSTS]
             })
         }
     })
@@ -130,6 +144,7 @@ export const useDeleteSavedPostMutation = () => {
             queryClient.invalidateQueries({
                 queryKey:[QUERY_KEYS.GET_CURRENT_USER]
             })
+            
         }
     })
 }
@@ -187,6 +202,9 @@ export const useUpdateProfileMutation = ()=>{
             queryClient.invalidateQueries({
                 queryKey:[QUERY_KEYS.GET_CURRENT_USER]
             })
+            queryClient.invalidateQueries({
+                queryKey:[QUERY_KEYS.GET_INFINITE_POSTS]
+            })
         }
     })
 }
@@ -202,6 +220,9 @@ export const useDeletePostMutation = () => {
       onSuccess: () => {
         queryClient.invalidateQueries({
           queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
+        })
+        queryClient.invalidateQueries({
+            queryKey:[QUERY_KEYS.GET_INFINITE_POSTS]
         })
       }
     })
@@ -293,6 +314,9 @@ export const useGetSavedPosts = () => {
             queryClient.invalidateQueries({
                 queryKey:[QUERY_KEYS.GET_POST_BY_ID]
             })
+            queryClient.invalidateQueries({
+                queryKey:[QUERY_KEYS.GET_INFINITE_POSTS]
+            })
         
         }
     })
@@ -310,6 +334,9 @@ export const useGetSavedPosts = () => {
             })
             queryClient.invalidateQueries({
                 queryKey:[QUERY_KEYS.GET_POST_BY_ID]
+            })
+            queryClient.invalidateQueries({
+                queryKey:[QUERY_KEYS.GET_INFINITE_POSTS]
             })
         
         }

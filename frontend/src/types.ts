@@ -77,6 +77,7 @@ export type PostTypeProps = {
     post?: Models.Document,
     userId: string,
     noText?: boolean,
+    showComments?: boolean
    
 
 }

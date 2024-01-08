@@ -17,6 +17,7 @@ const GridPostsLists = ({posts, showStats=true, showUser=true}:GridPostListType)
 
   return (
     <ul className="grid-container">
+        
         {posts?.map((post) => {
             return (
                 <li key={post.$id} className="relative min-w-[200px] h-[300px]">
@@ -45,7 +46,7 @@ const GridPostsLists = ({posts, showStats=true, showUser=true}:GridPostListType)
 
                 {showStats && (
                 <div className="w-[90px] absolute bottom-0 right-0 mr-4 mb-4">
-                      <PostStats post={post} userId={user.id} noText /> 
+                      <PostStats post={post} userId={user.id} noText showComments={false} /> 
                 </div>
                 )
                 }

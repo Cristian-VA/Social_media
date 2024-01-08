@@ -12,7 +12,7 @@ import { checkIsLiked } from "@/lib/utils";
 import { ModalLikes } from "./ModalLikes";
 import CommentsMobile from "./CommentsMobile";
 
-const PostStats = ({ post, userId, noText }: PostTypeProps) => {
+const PostStats = ({ post, userId, noText, showComments=true }: PostTypeProps) => {
   const likesList = post?.likes?.map(
     (currentUser: Models.Document) => currentUser?.$id
   );
@@ -97,7 +97,7 @@ const PostStats = ({ post, userId, noText }: PostTypeProps) => {
   return (
     <div className="flex justify-between items-center ">
       <div className="flex gap-3 md:gap-2">
-        {isMobile && (
+        {isMobile && showComments && (
           <div className="flex ">
             <CommentsMobile info={post?.comments}
                 postId={post?.$id} />

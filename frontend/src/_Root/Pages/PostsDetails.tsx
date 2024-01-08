@@ -127,7 +127,7 @@ const PostsDetails = () => {
               <div className="tiny lg:text-[16px] py-3">
                 <p>{post?.caption}</p>
                 <ul className="flex gap-2 mt-3 max-w-full flex-wrap f">
-                  {TagsMap}
+                {post?.tags?.length > 1 && TagsMap}
                 </ul>
               </div>
               <PostStats post={post} userId={user.id} />

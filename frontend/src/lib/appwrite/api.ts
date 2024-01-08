@@ -385,7 +385,7 @@ export async function deletePost(postId?: string, imageId?: string) {
 
     return { status: "Ok" }
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
 }
 
@@ -426,7 +426,7 @@ export async function getAllUsers({ pageParam }: { pageParam: number }) {
 }
 
 export async function getInfinitePosts({ pageParam }: { pageParam: number }) {
-  const queries: any[] = [Query.orderDesc("$updatedAt"), Query.limit(6)];
+  const queries: any[] = [Query.orderDesc("$createdAt"), Query.limit(6)];
 
   if (pageParam) {
     queries.push(Query.cursorAfter(pageParam.toString())); //skips the first 10 and shows the entries for 10-20, used for pagination
