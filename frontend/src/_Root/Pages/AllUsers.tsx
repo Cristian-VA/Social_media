@@ -24,7 +24,7 @@ const AllUsers = () => {
   })
 
   if (!users) return(
-    <div className=" w-full flex justify-center flex-col  items-center ">
+    <div className=" w-full flex justify-center flex-col  items-center gap-2 ">
                 <Loader
                 color= "white"
                 shape= "spiner"

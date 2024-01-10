@@ -11,7 +11,7 @@ const LeftSideBar = () => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const { mutate: signOut,  isSuccess, isPending } = useSignOutAccountMutation()
-  
+
   const {data:user, isLoading} =useGetCurrentUserMutation()
 
   

@@ -152,7 +152,6 @@ const FormPost = ({post, action}:IPostFrom) => {
         )}
       />
       <div className='flex justify-end gap-3'>
-         <Button type="submit" className="h-12 bg-rose-500 px-5 text-white rounded-[8px] mt-2 hover:bg-rose-400 transition">Cancel</Button>
          <Button type="submit" className="h-12 bg-blue-500 px-5 text-white rounded-[8px] mt-2 hover:bg-blue-400 transition">Submit</Button>
       </div>
     </form>
