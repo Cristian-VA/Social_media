@@ -3,7 +3,6 @@ import { calculateDaysDifference } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { useUserContext } from "@/context/AuthContext";
 import PostStats from "./PostStats";
-import CommentBox from "./CommentBox";
 import { useState } from "react";
 import CommentsBox from "./CommetsBox";
 
@@ -56,7 +55,7 @@ const PostCard = ({ post }: postCardType) => {
                   <img
                     src="/assets/Icons/location.svg"
                     alt="location Icon"
-                    className="w-[18px]"
+                    className="w-[18px] "
                   />
                   <p>{post?.location}</p>
                 </div>

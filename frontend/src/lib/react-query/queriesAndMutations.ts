@@ -176,6 +176,7 @@ export const useUpdatePostMutation = ()=>{
             queryClient.invalidateQueries({
                 queryKey:[QUERY_KEYS.GET_POST_BY_ID, data?.$id]
             })
+
         }
     })
 }

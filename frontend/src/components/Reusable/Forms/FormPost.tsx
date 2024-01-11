@@ -27,7 +27,7 @@ const FormPost = ({post, action}:IPostFrom) => {
   const { toast } = useToast()
   const navigate = useNavigate()
   const {mutateAsync: createPost, isPending:IsLoadingPost} = useCreatePostMutation()
-  const {mutateAsync: updatePost, isPending:IsUpdatingPost} = useUpdatePostMutation()
+  const {mutateAsync: updatePost, isPending:IsUpdatingPost, isSuccess} = useUpdatePostMutation()
   const {mutateAsync: deletePost, isPending:IsDeletingPost} = useDeletePostMutation()
 
     const form = useForm<z.infer<typeof PostValidation>>({
@@ -70,7 +70,7 @@ const FormPost = ({post, action}:IPostFrom) => {
       }
 
       
-
+      isSuccess && navigate('/')
 
   return (
     <>

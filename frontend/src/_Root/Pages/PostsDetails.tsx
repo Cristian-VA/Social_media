@@ -21,7 +21,7 @@ const PostsDetails = () => {
 
   const { user } = useUserContext();
   const daysPosted = calculateDaysDifference(post?.$createdAt);
-  console.log(isSuccess)
+
   const TagsMap = post?.tags.map((tag: string) => {
     return (
       <li
@@ -98,7 +98,7 @@ const PostsDetails = () => {
               </div>
 
               <div className="flex gap-4 w-[90px] md:w-[130px] my-auto xl:my-2 ">
-                {user.id === post?.creator.$id ? (
+                {user.id === post?.creator.$id && (
                   <>
                     <Link to={`/update-post/${post?.$id}`}>
                       <img
@@ -116,8 +116,6 @@ const PostsDetails = () => {
                     />
                  
                   </>
-                ) : (
-                  ""
                 )}
               </div>
             </div>
