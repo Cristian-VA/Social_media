@@ -12,7 +12,7 @@ type GridPostListType = {
 const GridPostsLists = ({posts, showStats=true, showUser=true}:GridPostListType) => {
    
     const {user} = useUserContext()
-    console.log(posts)
+  
     
 
   return (

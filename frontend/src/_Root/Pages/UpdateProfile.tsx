@@ -11,7 +11,7 @@ const { data: userDetails, isPending: isLoadingUserDetails } =
     useGetUserByIdMutation(id || "");
 
 
-  console.log(userDetails)
+
   return (
     <>
       <div className='flex flex-1'>

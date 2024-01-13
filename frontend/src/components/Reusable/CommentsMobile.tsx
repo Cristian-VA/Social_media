@@ -9,7 +9,7 @@ import CommentBox from "./CommentBox";
 import CommentUser from "./CommentUser";
 
 const CommentsMobile = ({ info, postId }: { info?: any; postId: any }) => {
-  console.log(postId);
+
 
   const mapComments = info?.map((comment: any, index: number) => {
     return <CommentBox info={comment} key={index} postId={postId} />;
@@ -31,7 +31,7 @@ const CommentsMobile = ({ info, postId }: { info?: any; postId: any }) => {
         <div className="flex flex-col gap-4 custom-scrollbar overflow-scroll max-h-[500px] h-full   mb-auto pr-1 ">
           {mapComments}
         </div>
-        <CommentUser postId={postId} info={info?.comments} />
+        <CommentUser postId={postId} />
       </DialogContent>
     </Dialog>
   );

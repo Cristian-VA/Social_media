@@ -9,7 +9,7 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
+  
   FormMessage
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
@@ -50,13 +50,13 @@ const CommentForm = ({postId, info, isEditing, toggleEditing}:{postId:string, in
 
     } else {
      
-      console.log(isEditing)
+     
       const updatedComment = await updateComment({
         ...values,
         commentId: info?.$id
       })
       toggleEditing()
-      console.log(isEditing)
+    
       
       
 

@@ -22,7 +22,7 @@ const Explore = () => {
     fetchNextPage,
     hasNextPage,
   } = useGetInfinitePostsMutation();
-  console.log(posts);
+
   const shouldShowSearchResults = searchValue !== ""; //if search Value is empty shouldShowSearchResults = false
   const shouldShowPosts =
     !shouldShowSearchResults &&

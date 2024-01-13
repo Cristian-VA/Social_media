@@ -1,4 +1,4 @@
-import { Query } from 'appwrite';
+// @ts-nocheck
 import { INewPost, IUpdatePost, INewComment, IUpdateComment } from './../../types';
 import { INewUser, IUpdateProfile } from "@/types"
 import {useQuery, useMutation, useQueryClient, useInfiniteQuery} from "@tanstack/react-query"

@@ -6,7 +6,7 @@ import LogOutModal from '../Reusable/LogOutModal'
 const TopBar = () => {
   const navigate = useNavigate()
   const { mutate: signOut,  isSuccess, isPending } = useSignOutAccountMutation()
-  const {data:user, isLoading} =useGetCurrentUserMutation()
+  const {data:user } =useGetCurrentUserMutation()
   useEffect(() => {
     if (isSuccess) {
       navigate(0)

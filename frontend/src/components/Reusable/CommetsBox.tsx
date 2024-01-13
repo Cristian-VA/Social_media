@@ -26,7 +26,7 @@ const CommentsBox = ({msg, info, postId}:{msg:string, info?:any, postId:string})
         <div className="flex flex-col gap-4 custom-scrollbar overflow-scroll max-h-[250px] pr-1 ">
          {mapComments}
         </div>
-        <CommentUser postId={postId} info={info.comments}/>
+        <CommentUser postId={postId}/>
         </AccordionContent>
       </AccordionItem>
     </Accordion>

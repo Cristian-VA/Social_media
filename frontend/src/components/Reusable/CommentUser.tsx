@@ -1,8 +1,8 @@
-import React from 'react'
+
 import { useGetCurrentUserMutation } from '@/lib/react-query/queriesAndMutations'
-import { Input } from '../ui/input'
+
 import CommentForm from './Forms/CommentForm'
-import { Models } from 'appwrite'
+
 
 
 const CommentUser = ({postId }:{postId:string }) => {

@@ -1,13 +1,13 @@
-import React from 'react'
+
 import PostCard from './PostCard'
 import { Models } from 'appwrite'
 
-const PostCardList = ({posts}:{posts:Models.Document[]}) => {
+const PostCardList = ({posts}:{posts?:Models.Document[]}) => {
     
 
   return (
     <>
-      {posts?.map((post) =>  <PostCard post={post}/> )}
+      {posts?.map((post ,index ) =>  <PostCard post={post} key={index}/> )}
     </>
   )
 }

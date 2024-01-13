@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
@@ -10,7 +10,6 @@ import { Input } from "@/components/ui/input"
 import FileUploader from '../FileUploader'
 import { ProfileValidation } from '@/lib/Validation'
 import { Models } from 'appwrite'
-import { useUserContext } from '@/context/AuthContext';
 
 import { useToast } from '@/components/ui/use-toast'
 import { useNavigate } from 'react-router-dom'
@@ -24,7 +23,7 @@ import Loader from '../Loader'
 
 
 const FormProfile = ({profile}:IProfileFrom) => {
-  const { user } = useUserContext()
+ 
   const { toast } = useToast()
   const navigate = useNavigate()
   

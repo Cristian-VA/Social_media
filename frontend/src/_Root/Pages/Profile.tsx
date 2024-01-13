@@ -1,4 +1,4 @@
-import React from "react";
+
 import { useParams } from "react-router-dom";
 import {
   useGetUserByIdMutation,
@@ -13,7 +13,7 @@ import { useUserContext } from "@/context/AuthContext";
 const Profile = () => {
   const { id } = useParams();
 
-  const { data: userPosts, isPending } = useGetPostsByUserID(id || "");
+  const { data: userPosts  } = useGetPostsByUserID(id || "");
   const { data: userDetails, isPending: isLoadingUserDetails } =
     useGetUserByIdMutation(id || "");
 

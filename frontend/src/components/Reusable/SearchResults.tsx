@@ -4,7 +4,7 @@ import Loader from './Loader'
 
 type SearchResultsProps = {
   isSearchFetching: boolean,
-  searchedPosts: Models.Document[]
+  searchedPosts?: Models.DocumentList<Models.Document>
 }
 
 
@@ -22,9 +22,9 @@ const SearchResults = ({isSearchFetching, searchedPosts } : SearchResultsProps) 
     </div>
   )
 
-  if (searchedPosts && searchedPosts.documents.length > 0) {
+  if (searchedPosts && searchedPosts?.documents.length > 0) {
     return (
-      <GridPostsLists posts={searchedPosts.documents} />
+      <GridPostsLists posts={searchedPosts?.documents} />
     )
   }
 

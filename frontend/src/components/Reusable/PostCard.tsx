@@ -3,7 +3,7 @@ import { calculateDaysDifference } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { useUserContext } from "@/context/AuthContext";
 import PostStats from "./PostStats";
-import { useState } from "react";
+
 import CommentsBox from "./CommetsBox";
 
 type postCardType = {
@@ -11,10 +11,10 @@ type postCardType = {
 };
 
 const PostCard = ({ post }: postCardType) => {
-  const [toggle, setToggle] = useState(false);
+
 
   const { user } = useUserContext();
-  console.log(post?.tags);
+ 
 
   const daysPosted = calculateDaysDifference(post?.$createdAt);
 

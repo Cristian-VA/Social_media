@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
@@ -28,7 +28,7 @@ const FormPost = ({post, action}:IPostFrom) => {
   const navigate = useNavigate()
   const {mutateAsync: createPost, isPending:IsLoadingPost} = useCreatePostMutation()
   const {mutateAsync: updatePost, isPending:IsUpdatingPost, isSuccess} = useUpdatePostMutation()
-  const {mutateAsync: deletePost, isPending:IsDeletingPost} = useDeletePostMutation()
+  const { isPending:IsDeletingPost} = useDeletePostMutation()
 
     const form = useForm<z.infer<typeof PostValidation>>({
         resolver: zodResolver(PostValidation),

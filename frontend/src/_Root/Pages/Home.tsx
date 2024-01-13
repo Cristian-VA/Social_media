@@ -1,7 +1,5 @@
 import Loader from "@/components/Reusable/Loader";
 import { useGetRecentPostsMutation, useGetInfinitePostsMutation } from "@/lib/react-query/queriesAndMutations";
-import { Models } from "appwrite";
-import PostCard from "@/components/Reusable/PostCard";
 import PostCardList from "@/components/Reusable/PostCardList";
 import { useEffect } from "react";
 import { useInView } from 'react-intersection-observer';
@@ -11,7 +9,7 @@ const Home = () => {
   const {data: posts2,fetchNextPage, hasNextPage} = useGetInfinitePostsMutation();
 
   const {ref, inView} = useInView() 
-  console.log(posts)
+  
   useEffect(() => {
     if (inView ) {
       fetchNextPage();
